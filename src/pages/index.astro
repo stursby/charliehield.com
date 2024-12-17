@@ -1,11 +1,43 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout>
-	<Welcome />
+  <div class="flex flex-col gap-6 p-6 text-gray-700">
+    <div>
+      <h2>Basic Info</h2>
+      <h1>🕺 Charlie Hield</h1>
+      <p>👨‍💻 Web Developer</p>
+      <p>❄️ Minneapolis, MN</p>
+    </div>
+
+    <div>
+      <h2>Projects</h2>
+      <div class="flex flex-col">
+        <a href="https://haribotreatretreat.com/" target="_blank">🦄 The Treat Retreat (Haribo)</a>
+        <a href="https://www.3m.com/blog/en_US/improving-lives/" target="_blank">🔬 Improving Lives (3M)</a>
+        <a href="https://fasdproof.com" target="_blank">🤰 PR%F (Proof Alliance)</a>
+        <a href="https://twastwentytwenty.com/" target="_blank">🔎 ’Twas Twenty Twenty (Colle McVoy)</a>
+        <a href="https://mono-1.com/work/advance-auto-parts-pothole-dummy/" target="_blank"
+          >🛞 Pothole Dummy (Advance Auto Parts)</a
+        >
+      </div>
+    </div>
+
+    <div>
+      <h2>Skills</h2>
+      <p>✏️ HTML / CSS / JavaScript</p>
+      <p>🥷 Vue / Nuxt</p>
+      <p>💯 Laravel / Livewire / Filament</p>
+      <p>🎨 Photoshop / Illustrator / Figma / XD</p>
+    </div>
+
+    <div>
+      <h2>Hobbies</h2>
+      <p>🚵‍♂️ Mountain Biking</p>
+      <p>🏂 Snowboarding</p>
+      <p>🥏 Frisbee Golf</p>
+      <p>🏒 Hockey</p>
+    </div>
+  </div>
 </Layout>
