@@ -1,3 +1,10 @@
+---
+const title = 'Charlie Hield'
+const description = 'Seasoned full-stack web developer with 14+ years of experience living in Minneapolis, MN.'
+const url = 'https://charliehield.com'
+const image = 'https://charliehield.com/og.png'
+---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,12 +13,20 @@
     <link rel="icon" href="https://fav.farm/🕺" />
     <link rel="preconnect" href="https://fonts.bunny.net" />
     <link href="https://fonts.bunny.net/css?family=inter:400&display=swap" rel="stylesheet" />
-    <title>Charlie Hield</title>
     <meta name="generator" content={Astro.generator} />
-    <meta
-      name="description"
-      content="Seasoned full-stack web developer with 14+ years of experience living in Minneapolis, MN."
-    />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
   </head>
   <body>
     <slot />
