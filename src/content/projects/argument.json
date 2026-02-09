@@ -1,0 +1,45 @@
+{
+  "title": "Argument",
+  "description": "Website and Blog for Argument Computer Corporation.",
+  "url": "https://argument.xyz/",
+  "order": 4,
+  "colorsGenerated": true,
+  "layout": "B",
+  "imagesPath": "/images/argument",
+  "backgroundColor": "#eff75e",
+  "textColor": "#1F2937",
+  "tagBackgroundColor": "#5b3e2c1A",
+  "tagTextColor": "#1F2937",
+  "technologies": [
+    "Astro",
+    "React",
+    "GSAP",
+    "Tailwind CSS"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/argument/argument1.png",
+      "alt": "argument1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/argument/argument2.png",
+      "alt": "argument2",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/argument/argument3.png",
+      "alt": "argument3",
+      "colSpan": 4,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

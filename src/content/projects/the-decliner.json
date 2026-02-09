@@ -1,0 +1,46 @@
+{
+  "title": "The",
+  "subtitle": "Decliner",
+  "description": "A first-of-its-kind recliner prototype that uses AI to generate an excuse to decline last-minute invites. By simply pulling the handle, The Decliner creates a text message to be used as a response.",
+  "url": null,
+  "order": 5,
+  "colorsGenerated": true,
+  "layout": "A",
+  "imagesPath": "/images/the-decliner",
+  "backgroundColor": "#ec343c",
+  "textColor": "#FFFFFF",
+  "tagBackgroundColor": "#cbccc11A",
+  "tagTextColor": "#FFFFFF",
+  "technologies": [
+    "HTML",
+    "Tailwind CSS",
+    "OpenAI",
+    "<model-viewer>"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/the-decliner/decliner1.png",
+      "alt": "decliner1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/the-decliner/decliner2.png",
+      "alt": "decliner2",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/the-decliner/decliner3.png",
+      "alt": "decliner3",
+      "colSpan": 5,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

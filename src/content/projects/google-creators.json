@@ -1,0 +1,56 @@
+{
+  "title": "Google for",
+  "subtitle": "Creators",
+  "description": "Find tools and resources to take your web presence to the next level and see how other creators are finding success.",
+  "url": "https://creators.google/en-us/",
+  "client": "Google",
+  "order": 2,
+  "colorsGenerated": true,
+  "layout": "B",
+  "imagesPath": "/images/google-creators",
+  "backgroundColor": "#f4b47c",
+  "textColor": "#1F2937",
+  "tagBackgroundColor": "#3d44441A",
+  "tagTextColor": "#1F2937",
+  "technologies": [
+    "Python",
+    "Django",
+    "Wagtail CMS",
+    "HTML",
+    "CSS"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/google-creators/google1.png",
+      "alt": "google1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/google-creators/google2.png",
+      "alt": "google2",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[16/10]"
+    },
+    {
+      "type": "image",
+      "url": "/images/google-creators/google3.png",
+      "alt": "google3",
+      "colSpan": 4,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    },
+    {
+      "type": "image",
+      "url": "/images/google-creators/google4.png",
+      "alt": "google4",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[21/9]"
+    }
+  ]
+}

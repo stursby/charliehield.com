@@ -1,0 +1,47 @@
+{
+  "title": "The Treat",
+  "subtitle": "Retreat",
+  "description": "Custom booking system for a limited-time, unicorn-themed immersive experience in Soho, NYC.",
+  "url": "https://www.haribo.com/en-us/news/haribo-celebrates-new-unicorn-i-licious-gummies-with-a-sweet-overnight-fan-experience",
+  "client": "Haribo",
+  "order": 6,
+  "colorsGenerated": true,
+  "layout": "A",
+  "imagesPath": "/images/haribo",
+  "backgroundColor": "#e6348c",
+  "textColor": "#FFFFFF",
+  "tagBackgroundColor": "#b5bec61A",
+  "tagTextColor": "#FFFFFF",
+  "technologies": [
+    "Laravel",
+    "Livewire",
+    "PHP",
+    "Stripe"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/haribo/haribo1.png",
+      "alt": "haribo1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/haribo/haribo2.png",
+      "alt": "haribo2",
+      "colSpan": 7,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[16/10]"
+    },
+    {
+      "type": "image",
+      "url": "/images/haribo/haribo3.png",
+      "alt": "haribo3",
+      "colSpan": 4,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

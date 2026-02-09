@@ -1,6 +1,31 @@
 ---
+import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
 import MeshGradient from '../components/MeshGradient.astro'
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
+
+// Helper function to get Tailwind grid classes
+function getGridClasses(colSpan: number, rowSpan: number) {
+  const colSpanClasses: Record<number, string> = {
+    4: 'md:col-span-4',
+    5: 'md:col-span-5',
+    6: 'md:col-span-6',
+    7: 'md:col-span-7',
+    8: 'md:col-span-8',
+    12: 'md:col-span-12'
+  }
+
+  const rowSpanClasses: Record<number, string> = {
+    1: 'md:row-span-1',
+    2: 'md:row-span-2'
+  }
+
+  const colClass = colSpanClasses[colSpan] || 'md:col-span-12'
+  const rowClass = rowSpanClasses[rowSpan] || 'md:row-span-1'
+
+  return `${colClass} ${rowClass}`.trim()
+}
 ---
 
 <Layout>
@@ -117,7 +142,9 @@ import MeshGradient from '../components/MeshGradient.astro'
           class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange flex items-center gap-2"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+            ></path>
           </svg>
           GitHub
         </a>
@@ -143,8 +170,13 @@ import MeshGradient from '../components/MeshGradient.astro'
             class="block w-6 h-0.5 bg-dark mx-auto rounded-sm mt-[7px] transition-all duration-[0.35s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
           ></span>
         </div>
-        <svg class="close-icon absolute w-5 h-5 opacity-0 transition-all duration-[0.35s]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        <svg
+          class="close-icon absolute w-5 h-5 opacity-0 transition-all duration-[0.35s]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
     </nav>
@@ -190,13 +222,16 @@ import MeshGradient from '../components/MeshGradient.astro'
       <h1
         class="hero-title relative z-10 font-serif text-[clamp(4rem,11vw,9.5rem)] leading-[0.9] tracking-[-0.03em] text-dark"
       >
-        Building<br /><em class="italic text-orange">Digital</em><br />Experiences
+        Building<br /><em
+          class="italic text-orange relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.1em] after:right-[-0.03em] after:h-[0.15em] after:bg-orange/20 after:rounded-full after:z-[-1]"
+          >Digital</em
+        ><br />Experiences
       </h1>
       <p
         class="hero-subtitle relative z-10 font-sans text-[clamp(0.9rem,1.5vw,1.1rem)] font-medium text-[#666] max-w-[520px] leading-[1.4] mt-8"
       >
-        Full-stack developer with 14+ years crafting high-performance websites, interactive platforms, and everything in
-        between.
+        Full-stack developer & creative technologist with 15+ years crafting everything high-performance websites,
+        interactive platforms, and everything in between.
       </p>
       <div class="hero-ctas relative z-10 flex gap-4 mt-10">
         <a
@@ -285,580 +320,108 @@ import MeshGradient from '../components/MeshGradient.astro'
 
     <!-- PROJECTS -->
     <div id="projects">
-      <!-- PROJECT 01: DonerColle -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-yellow text-dark transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          01
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">01</span>
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            DonerColle<br /><em class="italic">Partners</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            Corporate identity and web platform for a leading advertising agency merging creative firepower with
-            strategic precision.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Nuxt/Vue</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">TypeScript</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Tailwind CSS</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">WebGL</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop"
-                alt="Modern office workspace"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=375&fit=crop"
-                alt="Team collaboration"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=375&fit=crop"
-                alt="Creative brainstorm"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://donercolle.com/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
+      {
+        projects.map(project => {
+          const {
+            title,
+            subtitle,
+            description,
+            url,
+            client,
+            order,
+            backgroundColor,
+            textColor,
+            tagBackgroundColor,
+            tagTextColor,
+            technologies,
+            content
+          } = project.data
+          const orderFormatted = String(order).padStart(2, '0')
 
-      <!-- PROJECT 02: Google for Creators -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-orange text-white transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          02
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">02</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >Google</span
+          return (
+            <section
+              class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden transition-[background] duration-500"
+              style={`background-color: ${backgroundColor}; color: ${textColor};`}
             >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            Google for<br /><em class="italic">Creators</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            A content platform empowering creators worldwide with tools, tips, and resources to grow their audience and
-            revenue.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">React</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Node.js</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">MongoDB</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">AWS</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=750&fit=crop"
-                alt="Content creation"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-4 md:row-span-2 md:mt-8 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=600&h=750&fit=crop"
-                alt="Video production"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&h=750&fit=crop"
-                alt="Digital design workspace"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://creators.google/en-us/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 03: Argument -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-green text-white transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          03
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">03</span>
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            <em class="italic">Argument</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            An AI-powered debate and discussion platform where ideas clash, perspectives sharpen, and critical thinking
-            thrives.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Next.js</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">OpenAI API</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">PostgreSQL</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Vercel</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=375&fit=crop"
-                alt="AI interface"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=375&fit=crop"
-                alt="Technology abstract"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=500&fit=crop"
-                alt="Neural network visualization"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://argument.xyz/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 04: The Treat Retreat -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-pink text-dark transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          04
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">04</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >Haribo</span
-            >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            The Treat<br /><em class="italic">Retreat</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            An immersive, candy-coated digital experience bringing Haribo's whimsical brand world to life online.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Three.js</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">GSAP</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">WordPress</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">PHP</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-12 md:row-span-1 aspect-[21/9] md:aspect-[21/9] rounded-2xl overflow-hidden relative"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=1200&h=500&fit=crop"
-                alt="Colorful candy display"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1581798269146-4a3e94b0a37e?w=600&h=375&fit=crop"
-                alt="Sweet treats arrangement"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1499195333224-3ce974eecb47?w=600&h=375&fit=crop"
-                alt="Playful brand design"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://haribotreatretreat.com/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 05: Improving Lives -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-purple text-white transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          05
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">05</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >3M</span
-            >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            Improving<br /><em class="italic">Lives</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            A storytelling platform showcasing how 3M's innovations are making a meaningful difference in communities
-            around the globe.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Vue.js</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Contentful</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">GraphQL</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Netlify</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop"
-                alt="Scientific innovation"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=375&fit=crop"
-                alt="Technology research"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=375&fit=crop"
-                alt="Community impact"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://www.3m.com/blog/en_US/improving-lives/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 06: PR%F -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-beige text-dark transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          06
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">06</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >Proof Alliance</span
-            >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            <em class="italic">PR%F</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            A powerful awareness platform for Proof Alliance, driving education and advocacy around fetal alcohol
-            spectrum disorders.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Laravel</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Livewire</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">MySQL</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Alpine.js</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&h=750&fit=crop"
-                alt="Family wellbeing"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-4 md:row-span-2 md:mt-8 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=600&h=750&fit=crop"
-                alt="Healthcare awareness"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=750&fit=crop"
-                alt="Medical advocacy"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://fasdproof.com"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 07: 'Twas Twenty Twenty -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-dark text-white transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          07
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">07</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >Colle McVoy</span
-            >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            'Twas Twenty<br /><em class="italic">Twenty</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            An interactive year-in-review experience capturing the chaos, resilience, and unexpected moments of an
-            unforgettable year.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">JavaScript</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Scroll Magic</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Canvas API</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Sass</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=600&h=375&fit=crop"
-                alt="Creative storytelling"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=375&fit=crop"
-                alt="Graphic design elements"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=500&fit=crop"
-                alt="Interactive experience"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://twastwentytwenty.com/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
-
-      <!-- PROJECT 08: Pothole Dummy -->
-      <section
-        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-blue text-white transition-[background] duration-500"
-      >
-        <div
-          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
-        >
-          08
-        </div>
-        <div class="max-w-[1400px] mx-auto">
-          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">08</span>
-            <span
-              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
-              >Advance Auto Parts</span
-            >
-          </div>
-          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-            Pothole<br /><em class="italic">Dummy</em>
-          </h2>
-          <p
-            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
-          >
-            A bold, tongue-in-cheek campaign microsite turning pothole damage awareness into an unforgettable branded
-            experience.
-          </p>
-          <div class="flex flex-wrap gap-2 mb-10">
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">jQuery</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Bootstrap</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Google Maps API</span>
-            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Express</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
-            <div
-              class="md:col-span-12 md:row-span-1 aspect-[21/9] md:aspect-[21/9] rounded-2xl overflow-hidden relative"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&h=500&fit=crop"
-                alt="Automotive scene"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=375&fit=crop"
-                alt="Car culture"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-            <div
-              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&h=375&fit=crop"
-                alt="Road and wheels"
-                loading="lazy"
-                class="w-full h-full object-cover block"
-              />
-            </div>
-          </div>
-          <a
-            href="https://mono-1.com/work/advance-auto-parts-pothole-dummy/"
-            target="_blank"
-            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
-            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
-          >
-        </div>
-      </section>
+              <div class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none">
+                {orderFormatted}
+              </div>
+              <div class="max-w-[1600px] mx-auto">
+                <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+                  <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">
+                    {orderFormatted}
+                  </span>
+                  {client && (
+                    <span class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70">
+                      {client}
+                    </span>
+                  )}
+                </div>
+                <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+                  {subtitle ? (
+                    <>
+                      {title}
+                      <br />
+                      <em class="italic">{subtitle}</em>
+                    </>
+                  ) : (
+                    <em class="italic">{title}</em>
+                  )}
+                </h2>
+                <p class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80">
+                  {description}
+                </p>
+                <div class="flex flex-wrap gap-2 mb-10">
+                  {technologies.map(tech => (
+                    <span
+                      class="font-sans text-sm font-semibold px-4 py-2 rounded-full"
+                      style={`background-color: ${tagBackgroundColor}; color: ${tagTextColor};`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mb-8"
+                  style="grid-auto-flow: dense; grid-auto-rows: 1fr;"
+                >
+                  {content.map(item => {
+                    const gridClasses = getGridClasses(item.colSpan || 12, item.rowSpan || 1)
+                    return (
+                      <div
+                        class={`col-span-full ${gridClasses} rounded-2xl overflow-hidden relative ${item.aspectRatio || 'aspect-[16/10]'}`}
+                      >
+                        {item.type === 'image' ? (
+                          <img src={item.url} alt={item.alt} loading="lazy" class="w-full h-full object-cover block" />
+                        ) : (
+                          <video
+                            src={item.url}
+                            autoplay
+                            muted
+                            playsinline
+                            loop
+                            class="w-full h-full object-cover block"
+                          >
+                            <track kind="captions" />
+                          </video>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+                <a
+                  href={url}
+                  target="_blank"
+                  class="font-sans font-bold text-[0.9rem] no-underline inline-flex items-center gap-3 px-8 py-3.5 border-2 rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
+                  style={`color: ${textColor}; border-color: ${textColor};`}
+                >
+                  View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span>
+                </a>
+              </div>
+            </section>
+          )
+        })
+      }
     </div>
 
     <!-- ABOUT & SKILLS -->
@@ -974,107 +537,124 @@ import MeshGradient from '../components/MeshGradient.astro'
 
     <!-- FOOTER -->
     <footer
-      class="bg-orange text-white py-[clamp(3rem,6vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] text-center relative overflow-hidden"
+      class="text-white py-[clamp(3rem,6vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] text-center relative overflow-hidden"
       id="contact"
     >
+      <MeshGradient
+        colors={[
+          '#0a0a0a', // very dark gray
+          '#1a1a1a', // dark gray
+          '#2a2a2a', // medium dark gray
+          '#1f1f1f', // dark charcoal
+          '#0f0f0f', // almost black
+          '#252525', // dark gray
+          '#151515', // very dark
+          '#1c1c1c', // dark gray
+          '#0a0a0a'  // very dark gray for blend
+        ]}
+      />
       <div class="relative z-[2] max-w-[1100px] mx-auto">
         <div
           class="font-sans font-extrabold text-xs tracking-[0.2em] uppercase text-orange bg-yellow inline-block px-6 py-2 rounded-full mb-8 shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
         >
-          Let's Connect
+          Let’s Connect
         </div>
         <h2 class="font-serif text-[clamp(3.5rem,10vw,8rem)] leading-[0.9] tracking-[-0.03em] mb-12 relative">
           <span>Got a project?</span><br />
           <em
-            class="italic text-yellow relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.03em] after:right-[-0.03em] after:h-[0.15em] after:bg-white/20 after:rounded-full after:z-[-1]"
-            >Let's talk.</em
+            class="italic text-yellow relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.1em] after:right-[-0.03em] after:h-[0.15em] after:bg-white/20 after:rounded-full after:z-[-1]"
+            >Let’s talk.</em
           >
         </h2>
 
         <div
-          class="bg-dark rounded-3xl md:rounded-[24px] py-[clamp(2rem,4vw,3rem)] px-[clamp(2rem,4vw,3rem)] max-w-[620px] mx-auto mb-12 relative shadow-[0_20px_60px_rgba(0,0,0,0.25),0_0_0_3px_rgba(255,209,102,0.15)] rotate-0 md:-rotate-[0.5deg] before:content-['//\\_drop\\_me\\_a\\_line'] before:absolute before:top-[-14px] before:left-[28px] before:font-sans before:font-extrabold before:text-[0.7rem] before:tracking-[0.12em] before:uppercase before:bg-yellow before:text-dark before:py-1.5 before:px-4 before:rounded-full"
+          class="relative max-w-[680px] mx-auto mb-12 contact-form-wrapper"
         >
-          <form name="contact" method="POST" data-netlify="true" class="text-left flex flex-col gap-5">
-            <input type="hidden" name="form-name" value="contact" />
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div class="flex flex-col gap-2">
-                <label for="name" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
-                  >Name</label
-                >
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Your name"
-                  required
-                  class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08]"
-                />
+          <!-- Glow effect behind form -->
+          <div class="absolute -inset-8 bg-gradient-to-br from-orange/20 via-yellow/10 to-orange/5 blur-[60px] rounded-full opacity-60"></div>
+
+          <!-- Form container with frosted glass effect -->
+          <div class="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-[clamp(2.5rem,5vw,3.5rem)] shadow-[0_25px_80px_rgba(0,0,0,0.4),0_0_1px_rgba(255,255,255,0.3)_inset] border border-white/20">
+            <form name="contact" method="POST" data-netlify="true" class="text-left flex flex-col gap-6">
+              <input type="hidden" name="form-name" value="contact" />
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2.5">
+                  <label for="name" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Your name"
+                    required
+                    class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20"
+                  />
+                </div>
+                <div class="flex flex-col gap-2.5">
+                  <label for="email" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@email.com"
+                    required
+                    class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20"
+                  />
+                </div>
               </div>
-              <div class="flex flex-col gap-2">
-                <label for="email" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
-                  >Email</label
-                >
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="you@email.com"
+
+              <div class="flex flex-col gap-2.5">
+                <label for="message" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Tell me about your project..."
                   required
-                  class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08]"
-                />
+                  class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 resize-y placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20 min-h-[140px]"
+                ></textarea>
               </div>
-            </div>
-            <div class="flex flex-col gap-2">
-              <label for="message" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
-                >Message</label
+
+              <button
+                type="submit"
+                class="contact-submit-btn font-sans font-extrabold text-base text-white bg-gradient-to-r from-orange to-orange/90 border-none py-4 px-12 rounded-full cursor-pointer inline-flex items-center justify-center gap-3 self-center mt-2 shadow-[0_8px_25px_rgba(232,88,12,0.35)] transition-all duration-300 hover:shadow-[0_12px_35px_rgba(232,88,12,0.45)] hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-100"
               >
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                placeholder="Tell me about your project..."
-                required
-                class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08] focus:-translate-y-px"
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              class="font-sans font-extrabold text-base text-dark bg-yellow border-none py-4 px-10 rounded-full cursor-pointer inline-flex items-center gap-3 self-center"
-            >
-              Send Message <span class="transition-transform duration-300 group-hover:translate-x-1.5">&rarr;</span>
-            </button>
-          </form>
+                Send Message
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
 
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-          <a
-            href="https://github.com/stursby"
-            target="_blank"
-            class="font-sans font-bold text-[0.85rem] text-white no-underline py-[0.7rem] px-[1.6rem] border-[2.5px] border-white/35 rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-2 backdrop-blur-[8px] hover:bg-white hover:text-orange hover:border-white hover:-translate-y-[3px] hover:-rotate-1 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)]"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
-              ><path
-                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-              ></path></svg
-            >
-            GitHub
-          </a>
-        </div>
-
-        <div
-          class="pt-8 border-t-2 border-dashed border-white/15 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 font-sans text-[0.8rem] text-white/50"
+      <div
+        class="relative z-[2] pt-8 border-t-2 border-dashed border-white/15 grid grid-cols-[1fr_auto_1fr] items-center gap-4 font-sans text-base text-white/50"
+      >
+        <span class="justify-self-start">&copy; 2026 Charlie Hield</span>
+        <span class="inline-flex items-center gap-1.5 justify-self-center"
+          >Built with <span class="text-yellow inline-block animate-pulse-scale">&hearts;</span> & Astro</span
         >
-          <span>&copy; 2025 Charlie Hield</span>
-          <span class="inline-flex items-center gap-1.5"
-            >Built with <span class="text-yellow inline-block animate-pulse-scale">&hearts;</span> & Astro</span
-          >
-          <a
-            href="https://github.com/stursby"
-            target="_blank"
-            class="text-white/50 no-underline transition-all duration-300 hover:text-yellow hover:-translate-y-px"
-            >@stursby</a
-          >
-        </div>
+        <a
+          href="https://github.com/stursby"
+          target="_blank"
+          class="text-white/50 no-underline transition-all duration-300 hover:text-yellow hover:-translate-y-px inline-flex items-center gap-2 justify-self-end"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+            ></path>
+          </svg>
+          GitHub
+        </a>
       </div>
     </footer>
   </div>

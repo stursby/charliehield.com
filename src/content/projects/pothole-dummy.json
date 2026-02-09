@@ -1,0 +1,47 @@
+{
+  "title": "Pothole",
+  "subtitle": "Dummy",
+  "description": "Potholes cost US drivers approximately $3 billion a year. They blow tires, wreck shocks, and bust struts. Advance Auto Parts decided to hit back and conduct the most insane pothole-pounding experiment the world has ever seen.",
+  "url": "https://cmspreview.mono-1.com/work/advance-auto-parts-pothole-dummy/",
+  "client": "Advance Auto Parts",
+  "order": 3,
+  "colorsGenerated": true,
+  "layout": "A",
+  "imagesPath": "/images/pothole-dummy",
+  "backgroundColor": "#e8d592",
+  "textColor": "#1F2937",
+  "tagBackgroundColor": "#3e40491A",
+  "tagTextColor": "#1F2937",
+  "technologies": [
+    "HTML",
+    "Firebase",
+    "Raspberry Pi",
+    "Arduino"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/pothole-dummy/pothole1.png",
+      "alt": "pothole1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[2/1]"
+    },
+    {
+      "type": "image",
+      "url": "/images/pothole-dummy/pothole2.png",
+      "alt": "pothole2",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/pothole-dummy/pothole3.png",
+      "alt": "pothole3",
+      "colSpan": 5,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

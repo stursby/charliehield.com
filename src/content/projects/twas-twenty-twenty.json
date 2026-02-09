@@ -1,0 +1,56 @@
+{
+  "title": "‘Twas Twenty",
+  "subtitle": "Twenty",
+  "description": "An interactive holiday picture-find game.",
+  "url": "https://twastwentytwenty.com/",
+  "client": "Colle McVoy",
+  "order": 7,
+  "colorsGenerated": true,
+  "layout": "B",
+  "imagesPath": "/images/twas-twenty-twenty",
+  "backgroundColor": "#ec6c64",
+  "textColor": "#1F2937",
+  "tagBackgroundColor": "#394c671A",
+  "tagTextColor": "#1F2937",
+  "technologies": [
+    "Nuxt",
+    "Anime.js",
+    "Howler.js",
+    "Tailwind CSS",
+    "SVG Animations"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/twas-twenty-twenty/twas1.png",
+      "alt": "twas1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[2/1]"
+    },
+    {
+      "type": "image",
+      "url": "/images/twas-twenty-twenty/twas2.png",
+      "alt": "twas2",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/twas-twenty-twenty/twas3.png",
+      "alt": "twas3",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-[2/1]"
+    },
+    {
+      "type": "image",
+      "url": "/images/twas-twenty-twenty/twas4.png",
+      "alt": "twas4",
+      "colSpan": 4,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

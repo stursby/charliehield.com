@@ -30,11 +30,12 @@ const {
 } = Astro.props
 
 const fadeStart = `${100 - fadeHeight * 100 * 2}%`
+const uniqueId = `mesh-gradient-${Math.random().toString(36).substr(2, 9)}`
 ---
 
 <div class="mesh-gradient-wrapper" style={`--fade-start: ${fadeStart}`}>
   <div
-    id="mesh-gradient-container"
+    id={uniqueId}
     class="mesh-gradient-container"
     data-colors={JSON.stringify(colors)}
     data-distortion={distortion}
@@ -79,54 +80,61 @@ const fadeStart = `${100 - fadeHeight * 100 * 2}%`
     ShaderFitOptions
   } from '@paper-design/shaders'
 
-  const container = document.getElementById('mesh-gradient-container')
+  const containers = document.querySelectorAll('.mesh-gradient-container')
+  const shaderMounts: ShaderMount[] = []
 
-  if (container) {
-    // Get props from data attributes
-    const colors = JSON.parse(container.dataset.colors || '[]')
-    const distortion = parseFloat(container.dataset.distortion || '0.15')
-    const swirl = parseFloat(container.dataset.swirl || '0.3')
-    const grainMixer = parseFloat(container.dataset.grainMixer || '0.0')
-    const grainOverlay = parseFloat(container.dataset.grainOverlay || '0.0')
-    const speed = parseFloat(container.dataset.speed || '0.15')
+  containers.forEach(container => {
+    if (container instanceof HTMLElement) {
+      // Get props from data attributes
+      const colors = JSON.parse(container.dataset.colors || '[]')
+      const distortion = parseFloat(container.dataset.distortion || '0.15')
+      const swirl = parseFloat(container.dataset.swirl || '0.3')
+      const grainMixer = parseFloat(container.dataset.grainMixer || '0.0')
+      const grainOverlay = parseFloat(container.dataset.grainOverlay || '0.0')
+      const speed = parseFloat(container.dataset.speed || '0.15')
 
-    // Convert colors to the format Paper expects
-    const colorVectors = colors.map(color => getShaderColorFromString(color))
+      // Convert colors to the format Paper expects
+      const colorVectors = colors.map(color => getShaderColorFromString(color))
 
-    const uniforms = {
-      // Color uniforms
-      u_colors: colorVectors,
-      u_colorsCount: colors.length,
-      // Effect uniforms
-      u_distortion: distortion,
-      u_swirl: swirl,
-      u_grainMixer: grainMixer,
-      u_grainOverlay: grainOverlay,
-      // Sizing uniforms (defaults)
-      u_fit: ShaderFitOptions.cover,
-      u_rotation: 0,
-      u_scale: 1,
-      u_offsetX: 0,
-      u_offsetY: 0,
-      u_originX: 0.5,
-      u_originY: 0.5,
-      u_worldWidth: 0,
-      u_worldHeight: 0
+      const uniforms = {
+        // Color uniforms
+        u_colors: colorVectors,
+        u_colorsCount: colors.length,
+        // Effect uniforms
+        u_distortion: distortion,
+        u_swirl: swirl,
+        u_grainMixer: grainMixer,
+        u_grainOverlay: grainOverlay,
+        // Sizing uniforms (defaults)
+        u_fit: ShaderFitOptions.cover,
+        u_rotation: 0,
+        u_scale: 1,
+        u_offsetX: 0,
+        u_offsetY: 0,
+        u_originX: 0.5,
+        u_originY: 0.5,
+        u_worldWidth: 0,
+        u_worldHeight: 0
+      }
+
+      const shaderMount = new ShaderMount(
+        container,
+        meshGradientFragmentShader,
+        uniforms,
+        { antialias: false, alpha: false },
+        speed
+      )
+
+      shaderMounts.push(shaderMount)
     }
+  })
 
-    const shaderMount = new ShaderMount(
-      container,
-      meshGradientFragmentShader,
-      uniforms,
-      { antialias: false, alpha: false },
-      speed
-    )
-
-    // Cleanup on page navigation (for view transitions)
-    document.addEventListener('astro:before-preparation', () => {
+  // Cleanup on page navigation (for view transitions)
+  document.addEventListener('astro:before-preparation', () => {
+    shaderMounts.forEach(shaderMount => {
       if (shaderMount) {
         shaderMount.dispose()
       }
     })
-  }
+  })
 </script>

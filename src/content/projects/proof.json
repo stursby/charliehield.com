@@ -1,0 +1,37 @@
+{
+  "title": "PR%F",
+  "description": "Scroll-driven animated website for Proof Alliance.",
+  "url": "https://fasdproof.com",
+  "client": "Proof Alliance",
+  "order": 8,
+  "colorsGenerated": true,
+  "layout": "B",
+  "imagesPath": "/images/proof",
+  "backgroundColor": "#4caba4",
+  "textColor": "#1F2937",
+  "tagBackgroundColor": "#2e485c1A",
+  "tagTextColor": "#1F2937",
+  "technologies": [
+    "Nuxt",
+    "GSAP",
+    "Tailwind CSS"
+  ],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/proof/proof1.png",
+      "alt": "proof1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    },
+    {
+      "type": "image",
+      "url": "/images/proof/proof2.png",
+      "alt": "proof2",
+      "colSpan": 4,
+      "rowSpan": 2,
+      "aspectRatio": "aspect-[9/16]"
+    }
+  ]
+}

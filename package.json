@@ -6,12 +6,18 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-projects": "node scripts/generate-projects.js"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.5",
     "@paper-design/shaders": "^0.0.71",
     "astro": "^5.17.1",
     "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "glob": "^13.0.1",
+    "image-size": "^2.0.2",
+    "node-vibrant": "^4.0.4"
   }
 }
