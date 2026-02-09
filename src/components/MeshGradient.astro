@@ -1,0 +1,132 @@
+---
+interface Props {
+  colors?: string[]
+  distortion?: number
+  swirl?: number
+  grainMixer?: number
+  grainOverlay?: number
+  fadeHeight?: number
+  speed?: number
+}
+
+const {
+  colors = [
+    '#FFE8D1', // warm beige
+    '#FFD9B8', // peachy orange
+    '#FFC8A0', // deeper peach
+    '#FFB088', // soft coral
+    '#FFD166', // yellow (site accent)
+    '#F5E6D3', // beige (site color)
+    '#FFF0DC', // light peach
+    '#FFECD6', // peachy cream
+    '#FFE8D1' // warm beige for blend
+  ],
+  distortion = 0.15,
+  swirl = 0.25,
+  grainMixer = 0.08,
+  grainOverlay = 0.05,
+  fadeHeight = 0.3,
+  speed = 0.1
+} = Astro.props
+
+const fadeStart = `${100 - fadeHeight * 100 * 2}%`
+---
+
+<div class="mesh-gradient-wrapper" style={`--fade-start: ${fadeStart}`}>
+  <div
+    id="mesh-gradient-container"
+    class="mesh-gradient-container"
+    data-colors={JSON.stringify(colors)}
+    data-distortion={distortion}
+    data-swirl={swirl}
+    data-grain-mixer={grainMixer}
+    data-grain-overlay={grainOverlay}
+    data-speed={speed}
+  >
+  </div>
+</div>
+
+<style>
+  .mesh-gradient-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+  }
+
+  .mesh-gradient-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mesh-gradient-container :global(canvas) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import {
+    ShaderMount,
+    meshGradientFragmentShader,
+    getShaderColorFromString,
+    ShaderFitOptions
+  } from '@paper-design/shaders'
+
+  const container = document.getElementById('mesh-gradient-container')
+
+  if (container) {
+    // Get props from data attributes
+    const colors = JSON.parse(container.dataset.colors || '[]')
+    const distortion = parseFloat(container.dataset.distortion || '0.15')
+    const swirl = parseFloat(container.dataset.swirl || '0.3')
+    const grainMixer = parseFloat(container.dataset.grainMixer || '0.0')
+    const grainOverlay = parseFloat(container.dataset.grainOverlay || '0.0')
+    const speed = parseFloat(container.dataset.speed || '0.15')
+
+    // Convert colors to the format Paper expects
+    const colorVectors = colors.map(color => getShaderColorFromString(color))
+
+    const uniforms = {
+      // Color uniforms
+      u_colors: colorVectors,
+      u_colorsCount: colors.length,
+      // Effect uniforms
+      u_distortion: distortion,
+      u_swirl: swirl,
+      u_grainMixer: grainMixer,
+      u_grainOverlay: grainOverlay,
+      // Sizing uniforms (defaults)
+      u_fit: ShaderFitOptions.cover,
+      u_rotation: 0,
+      u_scale: 1,
+      u_offsetX: 0,
+      u_offsetY: 0,
+      u_originX: 0.5,
+      u_originY: 0.5,
+      u_worldWidth: 0,
+      u_worldHeight: 0
+    }
+
+    const shaderMount = new ShaderMount(
+      container,
+      meshGradientFragmentShader,
+      uniforms,
+      { antialias: false, alpha: false },
+      speed
+    )
+
+    // Cleanup on page navigation (for view transitions)
+    document.addEventListener('astro:before-preparation', () => {
+      if (shaderMount) {
+        shaderMount.dispose()
+      }
+    })
+  }
+</script>

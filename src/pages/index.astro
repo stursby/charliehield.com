@@ -1,47 +1,1134 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import MeshGradient from '../components/MeshGradient.astro'
 ---
 
 <Layout>
-  <div class="flex flex-col gap-6 p-6 text-gray-700">
-    <div>
-      <h2>Basic Info</h2>
-      <h1>🕺 Charlie Hield</h1>
-      <p>👨‍💻 Web Developer</p>
-      <p>❄️ Minneapolis, MN</p>
-      <a href="https://github.com/stursby" target="_blank">🐙 GitHub</a>
+  <link
+    href="https://fonts.bunny.net/css?family=gabarito:400,500,600,700,800,900|instrument-serif:400,400i&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    @keyframes hero-slide-up-1 {
+      from {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes hero-slide-up-2 {
+      from {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes hero-slide-up-3 {
+      from {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes hero-slide-up-4 {
+      from {
+        opacity: 0;
+        transform: translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .hero-overline {
+      animation: hero-slide-up-1 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    }
+    .hero-title {
+      animation: hero-slide-up-2 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+    .hero-subtitle {
+      animation: hero-slide-up-3 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+    .hero-ctas {
+      animation: hero-slide-up-4 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+    }
+    .mobile-menu.open a:nth-child(1) {
+      transition:
+        opacity 0.4s 0.1s,
+        transform 0.4s 0.1s,
+        color 0.3s,
+        padding-left 0.3s;
+    }
+    .mobile-menu.open a:nth-child(2) {
+      transition:
+        opacity 0.4s 0.18s,
+        transform 0.4s 0.18s,
+        color 0.3s,
+        padding-left 0.3s;
+    }
+    .mobile-menu.open a:nth-child(3) {
+      transition:
+        opacity 0.4s 0.26s,
+        transform 0.4s 0.26s,
+        color 0.3s,
+        padding-left 0.3s;
+    }
+    .mobile-menu.open a:nth-child(4) {
+      transition:
+        opacity 0.4s 0.34s,
+        transform 0.4s 0.34s,
+        color 0.3s,
+        padding-left 0.3s;
+    }
+  </style>
+
+  <div class="font-sans bg-cream text-dark overflow-x-hidden antialiased">
+    <!-- NAV -->
+    <nav
+      class="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[clamp(1.5rem,5vw,4rem)] py-5 bg-cream/50 backdrop-blur-[12px] border-b-[1.5px] border-dark/[0.06]"
+    >
+      <a href="/" class="flex items-center gap-3 no-underline">
+        <span class="font-serif text-2xl italic text-dark no-underline">Charlie Hield</span>
+      </a>
+      <div class="hidden md:flex gap-8 items-center">
+        <a
+          href="#projects"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange"
+          >Projects</a
+        >
+        <a
+          href="#about"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange"
+          >About</a
+        >
+        <a
+          href="https://github.com/stursby"
+          target="_blank"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange flex items-center gap-2"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+          </svg>
+          GitHub
+        </a>
+        <a
+          href="#contact"
+          class="font-sans text-base font-semibold !bg-dark !text-white px-6 py-2.5 rounded-full transition-all duration-300 hover:!bg-orange hover:-translate-y-px"
+          >Contact</a
+        >
+      </div>
+      <button
+        class="md:hidden bg-none border-none cursor-pointer w-9 h-9 relative z-[200] p-0 flex items-center justify-center"
+        id="nav-hamburger"
+        aria-label="Toggle menu"
+      >
+        <div class="hamburger-lines">
+          <span
+            class="block w-6 h-0.5 bg-dark mx-auto rounded-sm mb-[7px] transition-all duration-[0.35s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+          ></span>
+          <span
+            class="block w-6 h-0.5 bg-dark mx-auto rounded-sm transition-all duration-[0.35s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+          ></span>
+          <span
+            class="block w-6 h-0.5 bg-dark mx-auto rounded-sm mt-[7px] transition-all duration-[0.35s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
+          ></span>
+        </div>
+        <svg class="close-icon absolute w-5 h-5 opacity-0 transition-all duration-[0.35s]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div
+      class="fixed inset-0 bg-dark/30 z-[140] opacity-0 pointer-events-none transition-opacity duration-[0.4s] backdrop-blur-[4px]"
+      id="mobile-overlay"
+    >
+    </div>
+    <div
+      class="mobile-menu fixed top-0 right-0 w-full max-w-[360px] h-screen bg-cream z-[150] pt-28 px-10 pb-12 flex flex-col gap-0 translate-x-full transition-transform duration-[0.45s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] shadow-[0_0_0_rgba(0,0,0,0)]"
+      id="mobile-menu"
+    >
+      <a
+        href="#projects"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        >Projects</a
+      >
+      <a
+        href="#about"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        >About</a
+      >
+      <a
+        href="#contact"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        >Contact</a
+      >
+      <a
+        href="https://github.com/stursby"
+        target="_blank"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        >GitHub</a
+      >
     </div>
 
-    <div>
-      <h2>Projects</h2>
-      <div class="flex flex-col">
-        <a href="https://donercolle.com/" target="_blank">🤝 DonerColle Partners</a>
-        <a href="https://creators.google/en-us/" target="_blank">🖼️ Google for Creators (Google)</a>
-        <a href="https://argument.xyz/" target="_blank">🤖 Argument</a>
-        <a href="https://haribotreatretreat.com/" target="_blank">🦄 The Treat Retreat (Haribo)</a>
-        <a href="https://www.3m.com/blog/en_US/improving-lives/" target="_blank">🔬 Improving Lives (3M)</a>
-        <a href="https://fasdproof.com" target="_blank">🤰 PR%F (Proof Alliance)</a>
-        <a href="https://twastwentytwenty.com/" target="_blank">🔎 ’Twas Twenty Twenty (Colle McVoy)</a>
-        <a href="https://mono-1.com/work/advance-auto-parts-pothole-dummy/" target="_blank"
-          >🛞 Pothole Dummy (Advance Auto Parts)</a
+    <!-- HERO -->
+    <section
+      class="min-h-screen flex flex-col justify-center items-center px-[clamp(1.5rem,5vw,4rem)] pt-32 pb-16 text-center relative bg-cream overflow-hidden"
+    >
+      <MeshGradient />
+      <h1
+        class="hero-title relative z-10 font-serif text-[clamp(4rem,11vw,9.5rem)] leading-[0.9] tracking-[-0.03em] text-dark"
+      >
+        Building<br /><em class="italic text-orange">Digital</em><br />Experiences
+      </h1>
+      <p
+        class="hero-subtitle relative z-10 font-sans text-[clamp(0.9rem,1.5vw,1.1rem)] font-medium text-[#666] max-w-[520px] leading-[1.4] mt-8"
+      >
+        Full-stack developer with 14+ years crafting high-performance websites, interactive platforms, and everything in
+        between.
+      </p>
+      <div class="hero-ctas relative z-10 flex gap-4 mt-10">
+        <a
+          href="#projects"
+          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-dark text-white border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-orange hover:border-orange hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,88,12,0.3)]"
+          >View Projects</a
+        >
+        <a
+          href="https://github.com/stursby"
+          target="_blank"
+          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-transparent text-dark border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:-translate-y-0.5"
+          >GitHub</a
+        >
+      </div>
+    </section>
+
+    <!-- MARQUEE STRIP -->
+    <div class="bg-dark py-4 overflow-hidden relative">
+      <div class="flex animate-marquee w-max">
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Vue / Nuxt <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Laravel <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >JavaScript <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Livewire <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Figma <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >HTML / CSS <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Filament <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Photoshop <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Vue / Nuxt <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Laravel <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >JavaScript <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Livewire <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Figma <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >HTML / CSS <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Filament <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
+        >
+        <span
+          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
+          >Photoshop <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
         >
       </div>
     </div>
 
-    <div>
-      <h2>Skills</h2>
-      <p>✏️ HTML / CSS / JavaScript</p>
-      <p>🥷 Vue / Nuxt</p>
-      <p>💯 Laravel / Livewire / Filament</p>
-      <p>🎨 Photoshop / Illustrator / Figma / XD</p>
+    <!-- PROJECTS -->
+    <div id="projects">
+      <!-- PROJECT 01: DonerColle -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-yellow text-dark transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          01
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">01</span>
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            DonerColle<br /><em class="italic">Partners</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            Corporate identity and web platform for a leading advertising agency merging creative firepower with
+            strategic precision.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Nuxt/Vue</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">TypeScript</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Tailwind CSS</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">WebGL</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop"
+                alt="Modern office workspace"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=375&fit=crop"
+                alt="Team collaboration"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=375&fit=crop"
+                alt="Creative brainstorm"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://donercolle.com/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 02: Google for Creators -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-orange text-white transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          02
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">02</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >Google</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            Google for<br /><em class="italic">Creators</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            A content platform empowering creators worldwide with tools, tips, and resources to grow their audience and
+            revenue.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">React</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Node.js</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">MongoDB</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">AWS</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=750&fit=crop"
+                alt="Content creation"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-4 md:row-span-2 md:mt-8 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=600&h=750&fit=crop"
+                alt="Video production"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=600&h=750&fit=crop"
+                alt="Digital design workspace"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://creators.google/en-us/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 03: Argument -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-green text-white transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          03
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">03</span>
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            <em class="italic">Argument</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            An AI-powered debate and discussion platform where ideas clash, perspectives sharpen, and critical thinking
+            thrives.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Next.js</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">OpenAI API</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">PostgreSQL</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Vercel</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=375&fit=crop"
+                alt="AI interface"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&h=375&fit=crop"
+                alt="Technology abstract"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=500&fit=crop"
+                alt="Neural network visualization"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://argument.xyz/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 04: The Treat Retreat -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-pink text-dark transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          04
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">04</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >Haribo</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            The Treat<br /><em class="italic">Retreat</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            An immersive, candy-coated digital experience bringing Haribo's whimsical brand world to life online.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Three.js</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">GSAP</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">WordPress</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">PHP</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-12 md:row-span-1 aspect-[21/9] md:aspect-[21/9] rounded-2xl overflow-hidden relative"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=1200&h=500&fit=crop"
+                alt="Colorful candy display"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1581798269146-4a3e94b0a37e?w=600&h=375&fit=crop"
+                alt="Sweet treats arrangement"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1499195333224-3ce974eecb47?w=600&h=375&fit=crop"
+                alt="Playful brand design"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://haribotreatretreat.com/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 05: Improving Lives -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-purple text-white transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          05
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">05</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >3M</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            Improving<br /><em class="italic">Lives</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            A storytelling platform showcasing how 3M's innovations are making a meaningful difference in communities
+            around the globe.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Vue.js</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Contentful</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">GraphQL</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Netlify</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=500&fit=crop"
+                alt="Scientific innovation"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=375&fit=crop"
+                alt="Technology research"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&h=375&fit=crop"
+                alt="Community impact"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://www.3m.com/blog/en_US/improving-lives/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 06: PR%F -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-beige text-dark transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          06
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">06</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >Proof Alliance</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            <em class="italic">PR%F</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            A powerful awareness platform for Proof Alliance, driving education and advocacy around fetal alcohol
+            spectrum disorders.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Laravel</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Livewire</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">MySQL</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-dark/10 text-dark rounded-full">Alpine.js</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&h=750&fit=crop"
+                alt="Family wellbeing"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-4 md:row-span-2 md:mt-8 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=600&h=750&fit=crop"
+                alt="Healthcare awareness"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-4 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=750&fit=crop"
+                alt="Medical advocacy"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://fasdproof.com"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:border-dark hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 07: 'Twas Twenty Twenty -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-dark text-white transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          07
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">07</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >Colle McVoy</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            'Twas Twenty<br /><em class="italic">Twenty</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            An interactive year-in-review experience capturing the chaos, resilience, and unexpected moments of an
+            unforgettable year.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">JavaScript</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Scroll Magic</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Canvas API</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Sass</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?w=600&h=375&fit=crop"
+                alt="Creative storytelling"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-5 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=375&fit=crop"
+                alt="Graphic design elements"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-7 md:row-span-2 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=500&fit=crop"
+                alt="Interactive experience"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://twastwentytwenty.com/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
+
+      <!-- PROJECT 08: Pothole Dummy -->
+      <section
+        class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden bg-blue text-white transition-[background] duration-500"
+      >
+        <div
+          class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none"
+        >
+          08
+        </div>
+        <div class="max-w-[1400px] mx-auto">
+          <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
+            <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">08</span>
+            <span
+              class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70"
+              >Advance Auto Parts</span
+            >
+          </div>
+          <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
+            Pothole<br /><em class="italic">Dummy</em>
+          </h2>
+          <p
+            class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80"
+          >
+            A bold, tongue-in-cheek campaign microsite turning pothole damage awareness into an unforgettable branded
+            experience.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-10">
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">jQuery</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Bootstrap</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Google Maps API</span>
+            <span class="font-sans text-sm font-semibold px-4 py-2 bg-white/20 text-white rounded-full">Express</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 mb-8">
+            <div
+              class="md:col-span-12 md:row-span-1 aspect-[21/9] md:aspect-[21/9] rounded-2xl overflow-hidden relative"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&h=500&fit=crop"
+                alt="Automotive scene"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=600&h=375&fit=crop"
+                alt="Car culture"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+            <div
+              class="md:col-span-6 md:row-span-1 rounded-2xl overflow-hidden relative aspect-[16/10]"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&h=375&fit=crop"
+                alt="Road and wheels"
+                loading="lazy"
+                class="w-full h-full object-cover block"
+              />
+            </div>
+          </div>
+          <a
+            href="https://mono-1.com/work/advance-auto-parts-pothole-dummy/"
+            target="_blank"
+            class="font-sans font-bold text-[0.9rem] no-underline text-[inherit] inline-flex items-center gap-3 px-8 py-3.5 border-2 border-[currentColor] rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-white hover:text-dark hover:border-white hover:-translate-y-0.5"
+            >View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span></a
+          >
+        </div>
+      </section>
     </div>
 
-    <div>
-      <h2>Hobbies</h2>
-      <p>🚵‍♂️ Mountain Biking</p>
-      <p>🏂 Snowboarding</p>
-      <p>🥏 Frisbee Golf</p>
-      <p>🏒 Hockey</p>
+    <!-- ABOUT & SKILLS -->
+    <section class="bg-cream py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)]" id="about">
+      <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[clamp(3rem,6vw,8rem)]">
+        <div>
+          <div class="font-sans font-bold text-xs tracking-[0.2em] uppercase text-orange mb-6">About Me</div>
+          <h2 class="font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-none tracking-[-0.02em] mb-8">
+            Code meets<br /><em class="italic text-orange">Craft</em>
+          </h2>
+          <p class="font-sans text-[1.05rem] font-medium leading-[1.7] text-[#555] max-w-[480px]">
+            Seasoned full-stack web developer with 14+ years of experience crafting digital experiences from
+            Minneapolis, MN. I love turning ambitious ideas into polished, performant realities.
+          </p>
+        </div>
+        <div>
+          <div class="font-sans font-bold text-xs tracking-[0.2em] uppercase text-orange mb-6">Technical Skills</div>
+          <div class="flex flex-col gap-0">
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-t-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+            >
+              HTML / CSS / JavaScript
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                >Frontend</span
+              >
+            </div>
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+            >
+              Vue / Nuxt
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                >Framework</span
+              >
+            </div>
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+            >
+              Laravel / Livewire / Filament
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                >Backend</span
+              >
+            </div>
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+            >
+              Photoshop / Illustrator / Figma / XD
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                >Design</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOBBIES MARQUEE -->
+    <div class="bg-yellow py-10 overflow-hidden">
+      <div class="flex animate-marquee-slow w-max">
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+        <span
+          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
+          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
+        >
+      </div>
     </div>
+
+    <!-- FOOTER -->
+    <footer
+      class="bg-orange text-white py-[clamp(3rem,6vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] text-center relative overflow-hidden"
+      id="contact"
+    >
+      <div class="relative z-[2] max-w-[1100px] mx-auto">
+        <div
+          class="font-sans font-extrabold text-xs tracking-[0.2em] uppercase text-orange bg-yellow inline-block px-6 py-2 rounded-full mb-8 shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
+        >
+          Let's Connect
+        </div>
+        <h2 class="font-serif text-[clamp(3.5rem,10vw,8rem)] leading-[0.9] tracking-[-0.03em] mb-12 relative">
+          <span>Got a project?</span><br />
+          <em
+            class="italic text-yellow relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.03em] after:right-[-0.03em] after:h-[0.15em] after:bg-white/20 after:rounded-full after:z-[-1]"
+            >Let's talk.</em
+          >
+        </h2>
+
+        <div
+          class="bg-dark rounded-3xl md:rounded-[24px] py-[clamp(2rem,4vw,3rem)] px-[clamp(2rem,4vw,3rem)] max-w-[620px] mx-auto mb-12 relative shadow-[0_20px_60px_rgba(0,0,0,0.25),0_0_0_3px_rgba(255,209,102,0.15)] rotate-0 md:-rotate-[0.5deg] before:content-['//\\_drop\\_me\\_a\\_line'] before:absolute before:top-[-14px] before:left-[28px] before:font-sans before:font-extrabold before:text-[0.7rem] before:tracking-[0.12em] before:uppercase before:bg-yellow before:text-dark before:py-1.5 before:px-4 before:rounded-full"
+        >
+          <form name="contact" method="POST" data-netlify="true" class="text-left flex flex-col gap-5">
+            <input type="hidden" name="form-name" value="contact" />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div class="flex flex-col gap-2">
+                <label for="name" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your name"
+                  required
+                  class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08]"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="email" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="you@email.com"
+                  required
+                  class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08]"
+                />
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <label for="message" class="font-sans font-bold text-[0.8rem] tracking-[0.08em] uppercase text-white/45"
+                >Message</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell me about your project..."
+                required
+                class="font-sans text-base font-medium py-3.5 px-5 bg-white/5 border-2 border-white/[0.08] rounded-[14px] text-white outline-none transition-all duration-300 resize-y placeholder:text-white/20 focus:border-yellow focus:bg-white/[0.08] focus:-translate-y-px"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="font-sans font-extrabold text-base text-dark bg-yellow border-none py-4 px-10 rounded-full cursor-pointer inline-flex items-center gap-3 self-center"
+            >
+              Send Message <span class="transition-transform duration-300 group-hover:translate-x-1.5">&rarr;</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <a
+            href="https://github.com/stursby"
+            target="_blank"
+            class="font-sans font-bold text-[0.85rem] text-white no-underline py-[0.7rem] px-[1.6rem] border-[2.5px] border-white/35 rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] inline-flex items-center gap-2 backdrop-blur-[8px] hover:bg-white hover:text-orange hover:border-white hover:-translate-y-[3px] hover:-rotate-1 hover:shadow-[0_8px_25px_rgba(0,0,0,0.15)]"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"
+              ><path
+                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+              ></path></svg
+            >
+            GitHub
+          </a>
+        </div>
+
+        <div
+          class="pt-8 border-t-2 border-dashed border-white/15 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 font-sans text-[0.8rem] text-white/50"
+        >
+          <span>&copy; 2025 Charlie Hield</span>
+          <span class="inline-flex items-center gap-1.5"
+            >Built with <span class="text-yellow inline-block animate-pulse-scale">&hearts;</span> & Astro</span
+          >
+          <a
+            href="https://github.com/stursby"
+            target="_blank"
+            class="text-white/50 no-underline transition-all duration-300 hover:text-yellow hover:-translate-y-px"
+            >@stursby</a
+          >
+        </div>
+      </div>
+    </footer>
   </div>
+
+  <script>
+    // Mobile menu
+    const hamburger = document.getElementById('nav-hamburger')
+    const mobileMenu = document.getElementById('mobile-menu')
+    const overlay = document.getElementById('mobile-overlay')
+
+    function toggleMenu() {
+      hamburger?.classList.toggle('active')
+      mobileMenu?.classList.toggle('open')
+      overlay?.classList.toggle('open')
+      document.body.style.overflow = mobileMenu?.classList.contains('open') ? 'hidden' : ''
+    }
+
+    function closeMenu() {
+      hamburger?.classList.remove('active')
+      mobileMenu?.classList.remove('open')
+      overlay?.classList.remove('open')
+      document.body.style.overflow = ''
+    }
+
+    hamburger?.addEventListener('click', toggleMenu)
+    overlay?.addEventListener('click', closeMenu)
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', closeMenu)
+    })
+
+    // Update hamburger animation when open
+    const style = document.createElement('style')
+    style.textContent = `
+      .active .hamburger-lines {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      .active .close-icon {
+        opacity: 1;
+        transform: rotate(90deg);
+      }
+      .mobile-menu.open a {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .mobile-menu.open {
+        transform: translateX(0);
+        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+      }
+      .mobile-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    `
+    document.head.appendChild(style)
+  </script>
 </Layout>
