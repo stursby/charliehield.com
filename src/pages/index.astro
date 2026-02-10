@@ -1,17 +1,12 @@
 ---
 import { getCollection } from 'astro:content'
-import { actions } from 'astro:actions'
 import Layout from '../layouts/Layout.astro'
 import MeshGradient from '../components/MeshGradient.astro'
 import Marquee from '../components/Marquee.astro'
 import { skills, hobbies } from '../data/profile'
 import '../styles/project-timeline.css'
 
-export const prerender = false // Enable SSR for this page
-
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
-
-const result = Astro.getActionResult(actions.sendContactForm)
 ---
 
 <Layout>
@@ -545,22 +540,13 @@ const result = Astro.getActionResult(actions.sendContactForm)
         <!-- CONTACT FORM -->
         <div class="max-w-[700px] mx-auto mb-[clamp(4rem,8vw,6rem)]">
           <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/10">
-            <form method="POST" action={actions.sendContactForm} class="flex flex-col gap-6" aria-label="Contact form">
-              {result?.data && (
-                <div class="mb-6 p-4 bg-green-500/10 border-2 border-green-500/30 rounded-lg">
-                  <p class="font-sans text-green-400 font-semibold">
-                    ✓ Message sent successfully! I'll get back to you soon.
-                  </p>
-                </div>
-              )}
-
-              {result?.error && (
-                <div class="mb-6 p-4 bg-red-500/10 border-2 border-red-500/30 rounded-lg">
-                  <p class="font-sans text-red-400 font-semibold">
-                    ✗ Failed to send message. Please try again or email me directly.
-                  </p>
-                </div>
-              )}
+            <!-- Form temporarily disabled - please email directly -->
+            <div class="mb-6 p-4 bg-blue-500/10 border-2 border-blue-500/30 rounded-lg">
+              <p class="font-sans text-blue-400 font-semibold text-center">
+                💬 Contact form temporarily unavailable. Please email me directly at <a href="mailto:charles.hield@gmail.com" class="text-orange hover:text-yellow underline">charles.hield@gmail.com</a>
+              </p>
+            </div>
+            <form class="flex flex-col gap-6 opacity-50 pointer-events-none" aria-label="Contact form" aria-disabled="true">
 
               <!-- NAME + EMAIL ROW -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -625,11 +611,12 @@ const result = Astro.getActionResult(actions.sendContactForm)
               <!-- SUBMIT BUTTON -->
               <div class="flex justify-center mt-6">
                 <button
-                  type="submit"
-                  class="font-sans font-bold text-base tracking-[0.05em] uppercase bg-orange text-white py-4 px-10 border-2 border-orange rounded-full cursor-pointer transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-yellow hover:border-yellow hover:text-dark focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
+                  type="button"
+                  disabled
+                  class="font-sans font-bold text-base tracking-[0.05em] uppercase bg-orange text-white py-4 px-10 border-2 border-orange rounded-full cursor-not-allowed transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
                   aria-label="Submit contact form"
                 >
-                  Send Message
+                  Form Unavailable
                 </button>
               </div>
 
