@@ -1,0 +1,356 @@
+/* Project Timeline Styles */
+
+/* Alternating sides layout */
+.timeline-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .timeline-content {
+    grid-template-columns: 1fr;
+    padding-left: 0;
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.content-left,
+.content-right {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.content-left {
+  padding-right: 3rem;
+  text-align: right;
+  animation-delay: 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+/* Sticky positioning for project info on desktop */
+@media (min-width: 769px) {
+  .content-left {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 12rem;
+    align-self: start;
+  }
+}
+
+.content-right {
+  padding-left: 3rem;
+  animation-delay: 0.3s;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .content-left,
+  .project-section:nth-child(even) .content-left,
+  .project-section:nth-child(odd) .content-left {
+    text-align: left;
+    padding: 0 !important;
+    padding-bottom: clamp(2rem, 5vw, 3rem) !important;
+  }
+
+  .content-right {
+    padding: 0;
+  }
+
+  /* Mobile: Simple linear layout - content first, images below */
+  .project-section {
+    padding: clamp(3rem, 6vw, 4rem) 1.5rem;
+  }
+
+  .project-client {
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    line-height: 0.92;
+    margin-bottom: 1rem;
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 100%;
+  }
+
+  .project-link {
+    margin-top: 1.25rem;
+  }
+
+  /* Images grid - cleaner spacing */
+  .content-right .images-grid {
+    gap: 2rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+}
+
+/* Alternate projects between left and right */
+.project-section:nth-child(odd) .content-left {
+  grid-column: 1;
+}
+
+.project-section:nth-child(odd) .content-right {
+  grid-column: 2;
+}
+
+.project-section:nth-child(even) .content-left {
+  grid-column: 2;
+  text-align: left;
+  padding-left: 3rem;
+  padding-right: 0;
+}
+
+/* Also make the even-numbered project info sticky */
+@media (min-width: 769px) {
+  .project-section:nth-child(even) .content-left {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 12rem;
+    align-self: start;
+  }
+}
+
+.project-section:nth-child(even) .content-right {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Reset grid positioning on mobile for consistent single-column layout */
+@media (max-width: 768px) {
+  .project-section:nth-child(odd) .content-left,
+  .project-section:nth-child(even) .content-left,
+  .project-section:nth-child(odd) .content-right,
+  .project-section:nth-child(even) .content-right {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+.project-number {
+  position: absolute;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(12rem, 30vw, 28rem);
+  line-height: 1;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Position number in top corners for odd/even sections */
+.project-section:nth-child(odd) .project-number {
+  top: -0.1em;
+  right: -0.05em;
+}
+
+.project-section:nth-child(even) .project-number {
+  top: -0.1em;
+  left: -0.05em;
+}
+
+@media (max-width: 768px) {
+  .project-number {
+    font-size: clamp(8rem, 22vw, 12rem);
+    top: 0.2em;
+    bottom: auto;
+    right: -0.05em;
+    left: auto;
+    opacity: 0.05;
+  }
+
+  .project-section:nth-child(even) .project-number,
+  .project-section:nth-child(odd) .project-number {
+    top: 0.2em;
+    bottom: auto;
+    right: -0.05em;
+    left: auto;
+  }
+}
+
+.project-client {
+  font-family: 'Gabarito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.25rem;
+  border: 2px solid currentColor;
+  border-radius: 50px;
+  opacity: 0.7;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+
+.project-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.project-description {
+  font-family: 'Gabarito', sans-serif;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  font-weight: 500;
+  line-height: 1.6;
+  max-width: 550px;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+.project-section:nth-child(even) .project-description {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.project-section:nth-child(odd) .project-description {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+@media (max-width: 768px) {
+  .project-description,
+  .project-section:nth-child(even) .project-description,
+  .project-section:nth-child(odd) .project-description {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Image grid on the side */
+.images-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+.timeline-image {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.timeline-image img,
+.timeline-image video {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Portrait images: container fits image size, centered */
+.timeline-image.portrait {
+  width: fit-content;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.timeline-image.portrait img,
+.timeline-image.portrait video {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .timeline-image.portrait {
+    max-width: 100%;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .timeline-image.portrait img,
+  .timeline-image.portrait video {
+    max-width: 360px;
+    width: 100%;
+  }
+}
+
+/* Tech tags */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.project-section:nth-child(odd) .tech-tags {
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .tech-tags,
+  .project-section:nth-child(odd) .tech-tags {
+    justify-content: flex-start;
+  }
+}
+
+.tech-tag {
+  font-family: 'Gabarito', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+.project-link {
+  font-family: 'Gabarito', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid currentColor;
+  opacity: 0.7;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.project-link:hover {
+  opacity: 1;
+  gap: 0.75rem;
+}
+
+.project-link:focus-visible {
+  opacity: 1;
+  gap: 0.75rem;
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.project-link span {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-link:hover span,
+.project-link:focus-visible span {
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .project-section:nth-child(odd) .project-number,
+  .project-section:nth-child(even) .project-number {
+    text-align: left;
+  }
+}

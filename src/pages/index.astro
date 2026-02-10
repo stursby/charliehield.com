@@ -3,12 +3,10 @@ import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
 import MeshGradient from '../components/MeshGradient.astro'
 import Marquee from '../components/Marquee.astro'
+import { skills, hobbies } from '../data/profile'
+import '../styles/project-timeline.css'
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
-
-const skills = ['Vue / Nuxt', 'Laravel', 'JavaScript', 'Livewire', 'Figma', 'HTML / CSS', 'Filament', 'Photoshop']
-
-const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
 ---
 
 <Layout>
@@ -48,47 +46,7 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
      * - Label color transition on focus-within
      */
 
-    @keyframes hero-slide-up-1 {
-      from {
-        opacity: 0;
-        transform: translateY(80px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes hero-slide-up-2 {
-      from {
-        opacity: 0;
-        transform: translateY(80px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes hero-slide-up-3 {
-      from {
-        opacity: 0;
-        transform: translateY(80px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes hero-slide-up-4 {
-      from {
-        opacity: 0;
-        transform: translateY(80px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes slideIn {
+    @keyframes fadeUp {
       from {
         opacity: 0;
         transform: translateY(30px);
@@ -99,28 +57,6 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
       }
     }
 
-    @keyframes mobileFadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .hero-overline {
-      animation: hero-slide-up-1 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-    }
-    .hero-title {
-      animation: hero-slide-up-2 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-    }
-    .hero-subtitle {
-      animation: hero-slide-up-3 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
-    }
-    .hero-ctas {
-      animation: hero-slide-up-4 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
-    }
     .mobile-menu.open a:nth-child(1) {
       transition:
         opacity 0.4s 0.1s,
@@ -171,358 +107,65 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
       transition: background 0.5s;
     }
 
-    /* Alternating sides layout */
-    .timeline-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 768px) {
-      .timeline-content {
-        grid-template-columns: 1fr;
-        padding-left: 0;
-        gap: 0;
-        display: flex;
-        flex-direction: column;
-      }
-    }
-
-    .content-left,
-    .content-right {
+    /* Hamburger menu animations */
+    .active .hamburger-lines {
       opacity: 0;
-      animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform: scale(0.8);
     }
 
-    .content-left {
-      padding-right: 3rem;
-      text-align: right;
-      animation-delay: 0.2s;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Sticky positioning for project info on desktop */
-    @media (min-width: 769px) {
-      .content-left {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 12rem;
-        align-self: start;
-      }
-    }
-
-    .content-right {
-      padding-left: 3rem;
-      animation-delay: 0.3s;
-      position: relative;
-      z-index: 1;
-    }
-
-    @media (max-width: 768px) {
-      .content-left,
-      .project-section:nth-child(even) .content-left,
-      .project-section:nth-child(odd) .content-left {
-        text-align: left;
-        padding: 0 !important;
-        padding-bottom: clamp(2rem, 5vw, 3rem) !important;
-      }
-
-      .content-right {
-        padding: 0;
-      }
-
-      /* Mobile: Simple linear layout - content first, images below */
-      .project-section {
-        padding: clamp(3rem, 6vw, 4rem) 1.5rem;
-      }
-
-      .project-client {
-        font-size: 0.75rem;
-        padding: 0.4rem 1rem;
-        margin-bottom: 1rem;
-      }
-
-      .project-title {
-        font-size: clamp(2.5rem, 10vw, 3.5rem);
-        line-height: 0.92;
-        margin-bottom: 1rem;
-      }
-
-      .project-description {
-        font-size: 0.95rem;
-        line-height: 1.6;
-        margin-bottom: 1.25rem;
-        max-width: 100%;
-      }
-
-      .project-link {
-        margin-top: 1.25rem;
-      }
-
-      /* Images grid - cleaner spacing */
-      .content-right .images-grid {
-        gap: 2rem;
-        margin-top: clamp(2rem, 5vw, 3rem);
-      }
-    }
-
-    /* Alternate projects between left and right */
-    .project-section:nth-child(odd) .content-left {
-      grid-column: 1;
-    }
-
-    .project-section:nth-child(odd) .content-right {
-      grid-column: 2;
-    }
-
-    .project-section:nth-child(even) .content-left {
-      grid-column: 2;
-      text-align: left;
-      padding-left: 3rem;
-      padding-right: 0;
-    }
-
-    /* Also make the even-numbered project info sticky */
-    @media (min-width: 769px) {
-      .project-section:nth-child(even) .content-left {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 12rem;
-        align-self: start;
-      }
-    }
-
-    .project-section:nth-child(even) .content-right {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    /* Reset grid positioning on mobile for consistent single-column layout */
-    @media (max-width: 768px) {
-      .project-section:nth-child(odd) .content-left,
-      .project-section:nth-child(even) .content-left,
-      .project-section:nth-child(odd) .content-right,
-      .project-section:nth-child(even) .content-right {
-        grid-column: auto;
-        grid-row: auto;
-      }
-    }
-
-    .project-number {
-      position: absolute;
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(12rem, 30vw, 28rem);
-      line-height: 1;
-      opacity: 0.035;
-      pointer-events: none;
-      user-select: none;
-      z-index: 0;
-    }
-
-    /* Position number in top corners for odd/even sections */
-    .project-section:nth-child(odd) .project-number {
-      top: -0.1em;
-      right: -0.05em;
-    }
-
-    .project-section:nth-child(even) .project-number {
-      top: -0.1em;
-      left: -0.05em;
-    }
-
-    @media (max-width: 768px) {
-      .project-number {
-        font-size: clamp(8rem, 22vw, 12rem);
-        top: 0.2em;
-        bottom: auto;
-        right: -0.05em;
-        left: auto;
-        opacity: 0.05;
-      }
-
-      .project-section:nth-child(even) .project-number,
-      .project-section:nth-child(odd) .project-number {
-        top: 0.2em;
-        bottom: auto;
-        right: -0.05em;
-        left: auto;
-      }
-    }
-
-    .project-client {
-      font-family: 'Gabarito', sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.5rem 1.25rem;
-      border: 2px solid currentColor;
-      border-radius: 50px;
-      opacity: 0.7;
-      display: inline-block;
-      margin-bottom: 2rem;
-    }
-
-    .project-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(3rem, 8vw, 7rem);
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-    }
-
-    .project-description {
-      font-family: 'Gabarito', sans-serif;
-      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-      font-weight: 500;
-      line-height: 1.6;
-      max-width: 550px;
-      opacity: 0.8;
-      margin-bottom: 1.5rem;
-    }
-
-    .project-section:nth-child(even) .project-description {
-      margin-left: 0;
-      margin-right: auto;
-    }
-
-    .project-section:nth-child(odd) .project-description {
-      margin-left: auto;
-      margin-right: 0;
-    }
-
-    @media (max-width: 768px) {
-      .project-description,
-      .project-section:nth-child(even) .project-description,
-      .project-section:nth-child(odd) .project-description {
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-
-    /* Image grid on the side */
-    .images-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-
-    .timeline-image {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-    }
-
-    .timeline-image img,
-    .timeline-image video {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* Portrait images: container fits image size, centered */
-    .timeline-image.portrait {
-      width: fit-content;
-      max-width: 420px;
-      margin: 0 auto;
-    }
-
-    .timeline-image.portrait img,
-    .timeline-image.portrait video {
-      width: 100%;
-    }
-
-    @media (max-width: 768px) {
-      .timeline-image.portrait {
-        max-width: 100%;
-        width: fit-content;
-        margin: 0 auto;
-      }
-
-      .timeline-image.portrait img,
-      .timeline-image.portrait video {
-        max-width: 360px;
-        width: 100%;
-      }
-    }
-
-    /* Tech tags */
-    .tech-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-
-    .project-section:nth-child(odd) .tech-tags {
-      justify-content: flex-end;
-    }
-
-    @media (max-width: 768px) {
-      .tech-tags,
-      .project-section:nth-child(odd) .tech-tags {
-        justify-content: flex-start;
-      }
-    }
-
-    .tech-tag {
-      font-family: 'Gabarito', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 50px;
-    }
-
-    .project-link {
-      font-family: 'Gabarito', sans-serif;
-      font-weight: 600;
-      font-size: 0.875rem;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      text-transform: uppercase;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 2rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 2px solid currentColor;
-      opacity: 0.7;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      outline: none;
-    }
-
-    .project-link:hover {
+    .active .close-icon {
       opacity: 1;
-      gap: 0.75rem;
+      transform: rotate(90deg);
     }
 
-    .project-link:focus-visible {
+    .mobile-menu.open a {
       opacity: 1;
-      gap: 0.75rem;
-      outline: 2px solid currentColor;
-      outline-offset: 4px;
+      transform: translateX(0);
     }
 
-    .project-link span {
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    .mobile-menu.open {
+      transform: translateX(0);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
     }
 
-    .project-link:hover span,
-    .project-link:focus-visible span {
-      transform: translateX(4px);
+    .mobile-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
     }
 
+    /* Mobile scroll animations for projects */
     @media (max-width: 768px) {
-      .project-section:nth-child(odd) .project-number,
-      .project-section:nth-child(even) .project-number {
-        text-align: left;
+      .mobile-animated .content-left,
+      .mobile-animated .content-right .timeline-image {
+        opacity: 0;
+      }
+
+      .mobile-animated.mobile-visible .content-left {
+        animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image {
+        animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+
+      .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(5) {
+        animation-delay: 0.6s;
       }
     }
   </style>
@@ -630,7 +273,7 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
     >
       <MeshGradient />
       <h1
-        class="hero-title relative z-10 font-serif text-[clamp(4rem,11vw,9.5rem)] leading-[0.9] tracking-[-0.03em] text-dark"
+        class="animate-hero-slide-up [animation-delay:0.2s] [animation-duration:1s] relative z-10 font-serif text-[clamp(4rem,11vw,9.5rem)] leading-[0.9] tracking-[-0.03em] text-dark"
       >
         Building<br /><em
           class="italic text-orange relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.1em] after:right-[-0.03em] after:h-[0.15em] after:bg-orange/20 after:rounded-full after:z-[-1]"
@@ -638,12 +281,12 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
         ><br />Experiences
       </h1>
       <p
-        class="hero-subtitle relative z-10 font-sans text-[clamp(0.9rem,1.5vw,1.1rem)] font-medium text-[#666] max-w-[520px] leading-[1.4] mt-8"
+        class="animate-hero-slide-up [animation-delay:0.4s] [animation-duration:1s] relative z-10 font-sans text-[clamp(0.9rem,1.5vw,1.1rem)] font-medium text-[#666] max-w-[520px] leading-[1.4] mt-8"
       >
         Full-stack developer and creative technologist with 15+ years of experience delivering high-performance
         websites, interactive platforms, and innovative digital experiences for leading brands.
       </p>
-      <div class="hero-ctas relative z-10 flex gap-4 mt-10">
+      <div class="animate-hero-slide-up [animation-delay:0.6s] [animation-duration:1s] relative z-10 flex gap-4 mt-10">
         <a
           href="#projects"
           class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-dark text-white border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-orange hover:border-orange hover:shadow-[0_8px_25px_rgba(232,88,12,0.3)] focus-visible:bg-orange focus-visible:border-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
@@ -969,7 +612,9 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
             <div class="font-sans text-base text-white/50 md:text-left flex gap-1 justify-center md:justify-start">
               <span class="text-xl">©</span> 2026 Charlie Hield
             </div>
-            <div class="font-serif italic text-xl text-white/50 text-center">Made with 💛 &nbsp;in MPLS</div>
+            <div class="font-serif italic text-xl text-white/50 text-center">
+              Made with <span class="text-red-500 not-italic text-base">♥</span> in MPLS
+            </div>
             <div class="md:text-right flex justify-center md:justify-end">
               <a
                 href="https://github.com/stursby"
@@ -1016,31 +661,7 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
       link.addEventListener('click', closeMenu)
     })
 
-    // Update hamburger animation when open
-    const style = document.createElement('style')
-    style.textContent = `
-      .active .hamburger-lines {
-        opacity: 0;
-        transform: scale(0.8);
-      }
-      .active .close-icon {
-        opacity: 1;
-        transform: rotate(90deg);
-      }
-      .mobile-menu.open a {
-        opacity: 1;
-        transform: translateX(0);
-      }
-      .mobile-menu.open {
-        transform: translateX(0);
-        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
-      }
-      .mobile-overlay.open {
-        opacity: 1;
-        pointer-events: auto;
-      }
-    `
-    document.head.appendChild(style)
+    // Hamburger animation styles are now in static CSS
 
     // Mobile scroll animations for projects
     if (window.innerWidth <= 768) {
@@ -1063,45 +684,7 @@ const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
         projectObserver.observe(section)
       })
 
-      // Add mobile animation styles
-      const mobileStyle = document.createElement('style')
-      mobileStyle.textContent = `
-        @media (max-width: 768px) {
-          .mobile-animated .content-left,
-          .mobile-animated .content-right .timeline-image {
-            opacity: 0;
-          }
-
-          .mobile-animated.mobile-visible .content-left {
-            animation: mobileFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image {
-            animation: mobileFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(1) {
-            animation-delay: 0.2s;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(2) {
-            animation-delay: 0.3s;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(3) {
-            animation-delay: 0.4s;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(4) {
-            animation-delay: 0.5s;
-          }
-
-          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(5) {
-            animation-delay: 0.6s;
-          }
-        }
-      `
-      document.head.appendChild(mobileStyle)
+      // Mobile animation styles are now in static CSS
     }
   </script>
 </Layout>

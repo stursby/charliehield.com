@@ -42,31 +42,6 @@ export default {
         fadeInUp: {
           from: { opacity: '0', transform: 'translateY(40px)' },
           to: { opacity: '1', transform: 'translateY(0)' }
-        },
-        scaleIn: {
-          from: { opacity: '0', transform: 'scale(0.9)' },
-          to: { opacity: '1', transform: 'scale(1)' }
-        },
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(0deg)' },
-          '25%': { transform: 'rotate(3deg)' },
-          '75%': { transform: 'rotate(-3deg)' }
-        },
-        pulseScale: {
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.05)' }
-        },
-        slideInLeft: {
-          from: { opacity: '0', transform: 'translateX(-60px)' },
-          to: { opacity: '1', transform: 'translateX(0)' }
-        },
-        slideInRight: {
-          from: { opacity: '0', transform: 'translateX(60px)' },
-          to: { opacity: '1', transform: 'translateX(0)' }
-        },
-        drawLine: {
-          from: { width: '0' },
-          to: { width: '100%' }
         }
       },
       animation: {
@@ -78,13 +53,7 @@ export default {
         'spin-slow': 'spinSlow 20s linear infinite',
         'spin-slow-30': 'spinSlow 30s linear infinite',
         'spin-slow-reverse': 'spinSlow 15s linear infinite reverse',
-        'fade-in-up': 'fadeInUp 0.4s ease both',
-        'scale-in': 'scaleIn 0.4s ease both',
-        'wiggle': 'wiggle 3s ease-in-out infinite',
-        'pulse-scale': 'pulseScale 2s ease-in-out infinite',
-        'pulse-scale-5': 'pulseScale 5s ease-in-out infinite',
-        'slide-in-left': 'slideInLeft 0.4s ease both',
-        'slide-in-right': 'slideInRight 0.4s ease both'
+        'fade-in-up': 'fadeInUp 0.4s ease both'
       }
     }
   },

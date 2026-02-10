@@ -21,17 +21,12 @@ const projectsCollection = defineCollection({
         type: z.enum(['image', 'video']),
         url: z.string(), // Allow relative paths for local assets
         alt: z.string(),
-        colSpan: z.number().optional(),
-        rowSpan: z.number().optional(),
-        offset: z.boolean().optional(),
         aspectRatio: z.string().optional(),
         // Video-specific options
         autoplay: z.boolean().optional(),
         muted: z.boolean().optional(),
         loop: z.boolean().optional(),
         playsinline: z.boolean().optional(),
-        controls: z.boolean().optional(),
-        poster: z.string().optional(), // Thumbnail for video (allow relative paths)
       })
     ),
   }),
