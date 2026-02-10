@@ -6,8 +6,13 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server', // Enable SSR for server actions
   integrations: [tailwind()],
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true // Enable runtime access for local dev
+    }
+  }),
   image: {
     service: {
       entrypoint: 'astro/assets/services/compile'
