@@ -41,7 +41,7 @@ const animationDuration = speed === 'slow' ? '45s' : '60s'
   <div class="flex marquee-scroll w-max">
     {items.map(item => (
       <span
-        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-10 whitespace-nowrap flex items-center gap-10`}
+        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-5 whitespace-nowrap flex items-center gap-10`}
       >
         {item}
         {separator === 'dot' ? (
@@ -54,7 +54,7 @@ const animationDuration = speed === 'slow' ? '45s' : '60s'
     {/* Duplicate items for seamless loop */}
     {items.map(item => (
       <span
-        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-10 whitespace-nowrap flex items-center gap-10`}
+        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-5 whitespace-nowrap flex items-center gap-10`}
       >
         {item}
         {separator === 'dot' ? (
