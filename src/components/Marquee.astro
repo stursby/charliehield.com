@@ -32,37 +32,27 @@ const animationDuration = speed === 'slow' ? '45s' : '60s'
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-25%);
     }
   }
 </style>
 
 <div class={`${backgroundColor} ${padding} overflow-hidden relative`}>
   <div class="flex marquee-scroll w-max">
-    {items.map(item => (
-      <span
-        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-5 whitespace-nowrap flex items-center gap-10`}
-      >
-        {item}
-        {separator === 'dot' ? (
-          <span class={`w-1.5 h-1.5 ${separatorColor} rounded-full flex-shrink-0`}></span>
-        ) : (
-          <span class="font-sans not-italic text-2xl text-orange">&starf;</span>
-        )}
-      </span>
-    ))}
-    {/* Duplicate items for seamless loop */}
-    {items.map(item => (
-      <span
-        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-5 whitespace-nowrap flex items-center gap-10`}
-      >
-        {item}
-        {separator === 'dot' ? (
-          <span class={`w-1.5 h-1.5 ${separatorColor} rounded-full flex-shrink-0`}></span>
-        ) : (
-          <span class="font-sans not-italic text-2xl text-orange">&starf;</span>
-        )}
-      </span>
+    {/* Render content 4 times to ensure seamless scrolling on all screen sizes */}
+    {Array.from({ length: 4 }).map(() => (
+      items.map(item => (
+        <span
+          class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-5 whitespace-nowrap flex items-center gap-10`}
+        >
+          {item}
+          {separator === 'dot' ? (
+            <span class={`w-1.5 h-1.5 ${separatorColor} rounded-full flex-shrink-0`}></span>
+          ) : (
+            <span class="font-sans not-italic text-2xl text-orange">&starf;</span>
+          )}
+        </span>
+      ))
     ))}
   </div>
 </div>
