@@ -5,7 +5,7 @@ import cloudflare from '@astrojs/cloudflare'
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'hybrid', // Hybrid mode: static by default, SSR enabled per-page with prerender=false
+  output: 'static', // Static pages by default, SSR per-page with prerender=false (Astro 5+)
   adapter: cloudflare(),
   integrations: [tailwind()]
 })
