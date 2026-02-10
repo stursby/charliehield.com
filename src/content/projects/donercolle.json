@@ -11,13 +11,7 @@
   "textColor": "#1F2937",
   "tagBackgroundColor": "#4227401A",
   "tagTextColor": "#1F2937",
-  "technologies": [
-    "Nuxt/Vue",
-    "TypeScript",
-    "Tailwind CSS",
-    "WebGL",
-    "GSAP"
-  ],
+  "technologies": ["Nuxt", "TypeScript", "Tailwind CSS", "WebGL", "GSAP"],
   "content": [
     {
       "type": "image",

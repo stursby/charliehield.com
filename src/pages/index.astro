@@ -2,30 +2,13 @@
 import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
 import MeshGradient from '../components/MeshGradient.astro'
+import Marquee from '../components/Marquee.astro'
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order)
 
-// Helper function to get Tailwind grid classes
-function getGridClasses(colSpan: number, rowSpan: number) {
-  const colSpanClasses: Record<number, string> = {
-    4: 'md:col-span-4',
-    5: 'md:col-span-5',
-    6: 'md:col-span-6',
-    7: 'md:col-span-7',
-    8: 'md:col-span-8',
-    12: 'md:col-span-12'
-  }
+const skills = ['Vue / Nuxt', 'Laravel', 'JavaScript', 'Livewire', 'Figma', 'HTML / CSS', 'Filament', 'Photoshop']
 
-  const rowSpanClasses: Record<number, string> = {
-    1: 'md:row-span-1',
-    2: 'md:row-span-2'
-  }
-
-  const colClass = colSpanClasses[colSpan] || 'md:col-span-12'
-  const rowClass = rowSpanClasses[rowSpan] || 'md:row-span-1'
-
-  return `${colClass} ${rowClass}`.trim()
-}
+const hobbies = ['Mountain Biking', 'Snowboarding', 'Frisbee Golf', 'Hockey']
 ---
 
 <Layout>
@@ -35,6 +18,36 @@ function getGridClasses(colSpan: number, rowSpan: number) {
   />
 
   <style>
+    /*
+     * DESIGN SYSTEM STANDARDS
+     * -----------------------
+     * All interactive elements follow these consistent patterns:
+     *
+     * TIMING: cubic-bezier(0.16, 1, 0.3, 1) at 300ms
+     * BORDERS: 2px solid (standardized across all elements)
+     * HOVER TRANSFORMS: -translate-y-0.5 for buttons, scale-105 for submit
+     * FOCUS STATES: All interactive elements have focus-visible styles
+     * OPACITY: Links use 0.7 → 1.0 transition on hover/focus
+     *
+     * BUTTON STYLES:
+     * - Primary: bg-dark → bg-orange with border transition
+     * - Secondary: bg-transparent → bg-dark with text color swap
+     * - Submit: bg-orange → bg-yellow with lift effect
+     * - All use rounded-full with consistent padding
+     *
+     * LINK STYLES:
+     * - Nav links: Color transition to orange
+     * - Project links: Border-bottom with arrow slide
+     * - Footer links: Gap expansion with arrow fade-in
+     *
+     * FORM INPUTS:
+     * - bg-white/5 with border-2 border-white/20
+     * - Rounded corners (rounded-lg)
+     * - Hover: Increased border opacity + background intensity
+     * - Focus: Orange border + enhanced background
+     * - Label color transition on focus-within
+     */
+
     @keyframes hero-slide-up-1 {
       from {
         opacity: 0;
@@ -69,6 +82,27 @@ function getGridClasses(colSpan: number, rowSpan: number) {
       from {
         opacity: 0;
         transform: translateY(80px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes mobileFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
       to {
         opacity: 1;
@@ -115,9 +149,385 @@ function getGridClasses(colSpan: number, rowSpan: number) {
         color 0.3s,
         padding-left 0.3s;
     }
+
+    /* Project Timeline Styles */
+    .timeline-container {
+      padding: 0;
+      max-width: 1800px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-container {
+        padding: 0;
+      }
+    }
+
+    .project-section {
+      margin-bottom: 0;
+      padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 4rem);
+      position: relative;
+      transition: background 0.5s;
+    }
+
+    /* Alternating sides layout */
+    .timeline-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-content {
+        grid-template-columns: 1fr;
+        padding-left: 0;
+        gap: 0;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .content-left,
+    .content-right {
+      opacity: 0;
+      animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .content-left {
+      padding-right: 3rem;
+      text-align: right;
+      animation-delay: 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sticky positioning for project info on desktop */
+    @media (min-width: 769px) {
+      .content-left {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 12rem;
+        align-self: start;
+      }
+    }
+
+    .content-right {
+      padding-left: 3rem;
+      animation-delay: 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+      .content-left,
+      .project-section:nth-child(even) .content-left,
+      .project-section:nth-child(odd) .content-left {
+        text-align: left;
+        padding: 0 !important;
+        padding-bottom: clamp(2rem, 5vw, 3rem) !important;
+      }
+
+      .content-right {
+        padding: 0;
+      }
+
+      /* Mobile: Simple linear layout - content first, images below */
+      .project-section {
+        padding: clamp(3rem, 6vw, 4rem) 1.5rem;
+      }
+
+      .project-client {
+        font-size: 0.75rem;
+        padding: 0.4rem 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .project-title {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+        line-height: 0.92;
+        margin-bottom: 1rem;
+      }
+
+      .project-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+        max-width: 100%;
+      }
+
+      .project-link {
+        margin-top: 1.25rem;
+      }
+
+      /* Images grid - cleaner spacing */
+      .content-right .images-grid {
+        gap: 2rem;
+        margin-top: clamp(2rem, 5vw, 3rem);
+      }
+    }
+
+    /* Alternate projects between left and right */
+    .project-section:nth-child(odd) .content-left {
+      grid-column: 1;
+    }
+
+    .project-section:nth-child(odd) .content-right {
+      grid-column: 2;
+    }
+
+    .project-section:nth-child(even) .content-left {
+      grid-column: 2;
+      text-align: left;
+      padding-left: 3rem;
+      padding-right: 0;
+    }
+
+    /* Also make the even-numbered project info sticky */
+    @media (min-width: 769px) {
+      .project-section:nth-child(even) .content-left {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 12rem;
+        align-self: start;
+      }
+    }
+
+    .project-section:nth-child(even) .content-right {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    /* Reset grid positioning on mobile for consistent single-column layout */
+    @media (max-width: 768px) {
+      .project-section:nth-child(odd) .content-left,
+      .project-section:nth-child(even) .content-left,
+      .project-section:nth-child(odd) .content-right,
+      .project-section:nth-child(even) .content-right {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+
+    .project-number {
+      position: absolute;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(12rem, 30vw, 28rem);
+      line-height: 1;
+      opacity: 0.035;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* Position number in top corners for odd/even sections */
+    .project-section:nth-child(odd) .project-number {
+      top: -0.1em;
+      right: -0.05em;
+    }
+
+    .project-section:nth-child(even) .project-number {
+      top: -0.1em;
+      left: -0.05em;
+    }
+
+    @media (max-width: 768px) {
+      .project-number {
+        font-size: clamp(8rem, 22vw, 12rem);
+        top: 0.2em;
+        bottom: auto;
+        right: -0.05em;
+        left: auto;
+        opacity: 0.05;
+      }
+
+      .project-section:nth-child(even) .project-number,
+      .project-section:nth-child(odd) .project-number {
+        top: 0.2em;
+        bottom: auto;
+        right: -0.05em;
+        left: auto;
+      }
+    }
+
+    .project-client {
+      font-family: 'Gabarito', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.25rem;
+      border: 2px solid currentColor;
+      border-radius: 50px;
+      opacity: 0.7;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    .project-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-description {
+      font-family: 'Gabarito', sans-serif;
+      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+      font-weight: 500;
+      line-height: 1.6;
+      max-width: 550px;
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-section:nth-child(even) .project-description {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .project-section:nth-child(odd) .project-description {
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    @media (max-width: 768px) {
+      .project-description,
+      .project-section:nth-child(even) .project-description,
+      .project-section:nth-child(odd) .project-description {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    /* Image grid on the side */
+    .images-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .timeline-image {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .timeline-image img,
+    .timeline-image video {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Portrait images: container fits image size, centered */
+    .timeline-image.portrait {
+      width: fit-content;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .timeline-image.portrait img,
+    .timeline-image.portrait video {
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-image.portrait {
+        max-width: 100%;
+        width: fit-content;
+        margin: 0 auto;
+      }
+
+      .timeline-image.portrait img,
+      .timeline-image.portrait video {
+        max-width: 360px;
+        width: 100%;
+      }
+    }
+
+    /* Tech tags */
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-section:nth-child(odd) .tech-tags {
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 768px) {
+      .tech-tags,
+      .project-section:nth-child(odd) .tech-tags {
+        justify-content: flex-start;
+      }
+    }
+
+    .tech-tag {
+      font-family: 'Gabarito', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+    }
+
+    .project-link {
+      font-family: 'Gabarito', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid currentColor;
+      opacity: 0.7;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      outline: none;
+    }
+
+    .project-link:hover {
+      opacity: 1;
+      gap: 0.75rem;
+    }
+
+    .project-link:focus-visible {
+      opacity: 1;
+      gap: 0.75rem;
+      outline: 2px solid currentColor;
+      outline-offset: 4px;
+    }
+
+    .project-link span {
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-link:hover span,
+    .project-link:focus-visible span {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      .project-section:nth-child(odd) .project-number,
+      .project-section:nth-child(even) .project-number {
+        text-align: left;
+      }
+    }
   </style>
 
-  <div class="font-sans bg-cream text-dark overflow-x-hidden antialiased">
+  <div class="font-sans bg-cream text-dark overflow-x-clip antialiased">
     <!-- NAV -->
     <nav
       class="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[clamp(1.5rem,5vw,4rem)] py-5 bg-cream/50 backdrop-blur-[12px] border-b-[1.5px] border-dark/[0.06]"
@@ -128,18 +538,18 @@ function getGridClasses(colSpan: number, rowSpan: number) {
       <div class="hidden md:flex gap-8 items-center">
         <a
           href="#projects"
-          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:text-orange focus-visible:text-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4"
           >Projects</a
         >
         <a
           href="#about"
-          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:text-orange focus-visible:text-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4"
           >About</a
         >
         <a
           href="https://github.com/stursby"
           target="_blank"
-          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 hover:text-orange flex items-center gap-2"
+          class="font-sans text-base font-semibold text-dark no-underline tracking-[0.02em] transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:text-orange focus-visible:text-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-4 flex items-center gap-2"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path
@@ -150,12 +560,12 @@ function getGridClasses(colSpan: number, rowSpan: number) {
         </a>
         <a
           href="#contact"
-          class="font-sans text-base font-semibold !bg-dark !text-white px-6 py-2.5 rounded-full transition-all duration-300 hover:!bg-orange hover:-translate-y-px"
+          class="font-sans text-base font-semibold !bg-dark !text-white px-6 py-2.5 rounded-full border-2 border-dark transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:!bg-orange hover:border-orange focus-visible:!bg-orange focus-visible:border-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
           >Contact</a
         >
       </div>
       <button
-        class="md:hidden bg-none border-none cursor-pointer w-9 h-9 relative z-[200] p-0 flex items-center justify-center"
+        class="md:hidden bg-none border-none cursor-pointer w-9 h-9 relative z-[200] p-0 flex items-center justify-center focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
         id="nav-hamburger"
         aria-label="Toggle menu"
       >
@@ -171,7 +581,7 @@ function getGridClasses(colSpan: number, rowSpan: number) {
           ></span>
         </div>
         <svg
-          class="close-icon absolute w-5 h-5 opacity-0 transition-all duration-[0.35s]"
+          class="close-icon absolute w-5 h-5 opacity-0 transition-all duration-[0.35s] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -193,23 +603,23 @@ function getGridClasses(colSpan: number, rowSpan: number) {
     >
       <a
         href="#projects"
-        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-x-5 hover:text-orange hover:pl-3 focus-visible:text-orange focus-visible:pl-3 focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
         >Projects</a
       >
       <a
         href="#about"
-        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-x-5 hover:text-orange hover:pl-3 focus-visible:text-orange focus-visible:pl-3 focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
         >About</a
       >
       <a
         href="#contact"
-        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-x-5 hover:text-orange hover:pl-3 focus-visible:text-orange focus-visible:pl-3 focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
         >Contact</a
       >
       <a
         href="https://github.com/stursby"
         target="_blank"
-        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 opacity-0 translate-x-5 hover:text-orange hover:pl-3"
+        class="mobile-link font-serif text-[2.5rem] italic text-dark no-underline py-2.5 border-b-2 border-dark/[0.06] transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] opacity-0 translate-x-5 hover:text-orange hover:pl-3 focus-visible:text-orange focus-visible:pl-3 focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
         >GitHub</a
       >
     </div>
@@ -230,98 +640,31 @@ function getGridClasses(colSpan: number, rowSpan: number) {
       <p
         class="hero-subtitle relative z-10 font-sans text-[clamp(0.9rem,1.5vw,1.1rem)] font-medium text-[#666] max-w-[520px] leading-[1.4] mt-8"
       >
-        Full-stack developer & creative technologist with 15+ years crafting everything high-performance websites,
-        interactive platforms, and everything in between.
+        Full-stack developer and creative technologist with 15+ years of experience delivering high-performance
+        websites, interactive platforms, and innovative digital experiences for leading brands.
       </p>
       <div class="hero-ctas relative z-10 flex gap-4 mt-10">
         <a
           href="#projects"
-          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-dark text-white border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-orange hover:border-orange hover:-translate-y-0.5 hover:shadow-[0_8px_25px_rgba(232,88,12,0.3)]"
+          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-dark text-white border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-orange hover:border-orange hover:shadow-[0_8px_25px_rgba(232,88,12,0.3)] focus-visible:bg-orange focus-visible:border-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
           >View Projects</a
         >
         <a
           href="https://github.com/stursby"
           target="_blank"
-          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-transparent text-dark border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white hover:-translate-y-0.5"
+          class="font-sans font-bold text-[0.9rem] px-8 py-3.5 bg-transparent text-dark border-2 border-dark rounded-full cursor-pointer no-underline transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-dark hover:text-white focus-visible:bg-dark focus-visible:text-white focus-visible:outline-2 focus-visible:outline-dark focus-visible:outline-offset-2"
           >GitHub</a
         >
       </div>
     </section>
 
     <!-- MARQUEE STRIP -->
-    <div class="bg-dark py-4 overflow-hidden relative">
-      <div class="flex animate-marquee w-max">
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Vue / Nuxt <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Laravel <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >JavaScript <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Livewire <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Figma <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >HTML / CSS <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Filament <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Photoshop <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Vue / Nuxt <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Laravel <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >JavaScript <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Livewire <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Figma <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >HTML / CSS <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Filament <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-        <span
-          class="font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase text-white px-10 whitespace-nowrap flex items-center gap-10"
-          >Photoshop <span class="w-1.5 h-1.5 bg-orange rounded-full flex-shrink-0"></span></span
-        >
-      </div>
-    </div>
+    <Marquee items={skills} backgroundColor="bg-dark" textColor="text-white" separator="dot" speed="normal" />
 
     <!-- PROJECTS -->
-    <div id="projects">
+    <div id="projects" class="timeline-container">
       {
-        projects.map(project => {
+        projects.map((project, index) => {
           const {
             title,
             subtitle,
@@ -337,92 +680,80 @@ function getGridClasses(colSpan: number, rowSpan: number) {
             content
           } = project.data
           const orderFormatted = String(order).padStart(2, '0')
+          const displayTitle = subtitle ? (
+            <>
+              {title}
+              <br />
+              <em class="italic">{subtitle}</em>
+            </>
+          ) : (
+            <em class="italic">{title}</em>
+          )
 
           return (
-            <section
-              class="py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden transition-[background] duration-500"
-              style={`background-color: ${backgroundColor}; color: ${textColor};`}
-            >
-              <div class="absolute -bottom-[0.15em] -right-[0.02em] font-serif italic text-[clamp(12rem,30vw,28rem)] leading-none opacity-5 pointer-events-none select-none">
-                {orderFormatted}
-              </div>
-              <div class="max-w-[1600px] mx-auto">
-                <div class="flex justify-between items-start mb-6 flex-col md:flex-row gap-4 md:gap-0">
-                  <span class="font-sans font-black text-[clamp(4rem,8vw,7rem)] leading-none opacity-15">
-                    {orderFormatted}
-                  </span>
-                  {client && (
-                    <span class="font-sans font-bold text-[0.8rem] tracking-[0.15em] uppercase px-5 py-2 border-2 border-[currentColor] rounded-full opacity-70">
-                      {client}
-                    </span>
+            <section class="project-section" style={`background-color: ${backgroundColor}; color: ${textColor};`}>
+              <div class="timeline-content">
+                <div class="content-left">
+                  <div class="project-number">{orderFormatted}</div>
+
+                  {client && <span class="project-client">{client}</span>}
+
+                  <h2 class="project-title">{displayTitle}</h2>
+                  <p class="project-description">{description}</p>
+
+                  {technologies && technologies.length > 0 && (
+                    <div class="tech-tags">
+                      {technologies.map(tech => (
+                        <span
+                          class="tech-tag"
+                          style={`background-color: ${tagBackgroundColor}; color: ${tagTextColor};`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
                   )}
+
+                  <a href={url} target="_blank" class="project-link" style={`color: ${textColor};`}>
+                    View Project <span>&rarr;</span>
+                  </a>
                 </div>
-                <h2 class="font-serif text-[clamp(3rem,8vw,7rem)] leading-[0.92] tracking-[-0.02em] mb-6">
-                  {subtitle ? (
-                    <>
-                      {title}
-                      <br />
-                      <em class="italic">{subtitle}</em>
-                    </>
-                  ) : (
-                    <em class="italic">{title}</em>
-                  )}
-                </h2>
-                <p class="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] font-medium leading-[1.6] max-w-[550px] mb-6 opacity-80">
-                  {description}
-                </p>
-                <div class="flex flex-wrap gap-2 mb-10">
-                  {technologies.map(tech => (
-                    <span
-                      class="font-sans text-sm font-semibold px-4 py-2 rounded-full"
-                      style={`background-color: ${tagBackgroundColor}; color: ${tagTextColor};`}
-                    >
-                      {tech}
-                    </span>
-                  ))}
+
+                <div class="content-right">
+                  <div class="images-grid">
+                    {content.map(item => {
+                      // Detect portrait/tall images from aspectRatio
+                      const isPortrait =
+                        item.aspectRatio &&
+                        (item.aspectRatio.includes('9/16') ||
+                          item.aspectRatio.includes('[9/16]') ||
+                          item.aspectRatio.includes('3/4') ||
+                          item.aspectRatio.includes('[3/4]'))
+                      const imageClass = isPortrait ? 'timeline-image portrait' : 'timeline-image'
+
+                      return (
+                        <div class={imageClass}>
+                          {item.type === 'image' ? (
+                            <img src={item.url} alt={item.alt} loading="lazy" />
+                          ) : (
+                            <video src={item.url} autoplay muted playsinline loop>
+                              <track kind="captions" />
+                            </video>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
-                <div
-                  class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 mb-8"
-                  style="grid-auto-flow: dense; grid-auto-rows: 1fr;"
-                >
-                  {content.map(item => {
-                    const gridClasses = getGridClasses(item.colSpan || 12, item.rowSpan || 1)
-                    return (
-                      <div
-                        class={`col-span-full ${gridClasses} rounded-2xl overflow-hidden relative ${item.aspectRatio || 'aspect-[16/10]'}`}
-                      >
-                        {item.type === 'image' ? (
-                          <img src={item.url} alt={item.alt} loading="lazy" class="w-full h-full object-cover block" />
-                        ) : (
-                          <video
-                            src={item.url}
-                            autoplay
-                            muted
-                            playsinline
-                            loop
-                            class="w-full h-full object-cover block"
-                          >
-                            <track kind="captions" />
-                          </video>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-                <a
-                  href={url}
-                  target="_blank"
-                  class="font-sans font-bold text-[0.9rem] no-underline inline-flex items-center gap-3 px-8 py-3.5 border-2 rounded-full transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5"
-                  style={`color: ${textColor}; border-color: ${textColor};`}
-                >
-                  View Project <span class="transition-transform duration-300 [.hover\:&]:translate-x-1">&rarr;</span>
-                </a>
               </div>
             </section>
           )
         })
       }
     </div>
+
+    <!-- HOBBIES MARQUEE -->
+    <Marquee items={hobbies} backgroundColor="bg-yellow" textColor="text-dark" separator="dot" speed="slow" />
 
     <!-- ABOUT & SKILLS -->
     <section class="bg-cream py-[clamp(4rem,8vw,8rem)] px-[clamp(1.5rem,5vw,4rem)]" id="about">
@@ -432,48 +763,75 @@ function getGridClasses(colSpan: number, rowSpan: number) {
           <h2 class="font-serif text-[clamp(2.5rem,5vw,4.5rem)] leading-none tracking-[-0.02em] mb-8">
             Code meets<br /><em class="italic text-orange">Craft</em>
           </h2>
-          <p class="font-sans text-[1.05rem] font-medium leading-[1.7] text-[#555] max-w-[480px]">
-            Seasoned full-stack web developer with 14+ years of experience crafting digital experiences from
-            Minneapolis, MN. I love turning ambitious ideas into polished, performant realities.
+          <p class="font-sans text-[1.05rem] font-medium leading-[1.7] text-[#555] max-w-[480px] mb-8 text-balance">
+            I’m a Minneapolis, MN based full-stack developer and creative technologist with 15+ years of experience
+            turning complex ideas into elegant, high-performance digital products. I thrive in collaborative agency
+            environments where creative thinking and technical precision come together to produce meaningful digital
+            experiences.
           </p>
+          <div class="inline-block">
+            <img
+              src="/lego.png"
+              alt="Lego minifigure"
+              class="w-32 h-auto rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] rotate-[-2deg]"
+            />
+          </div>
         </div>
         <div>
           <div class="font-sans font-bold text-xs tracking-[0.2em] uppercase text-orange mb-6">Technical Skills</div>
           <div class="flex flex-col gap-0">
             <div
-              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-t-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-t-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
             >
               HTML / CSS / JavaScript
               <span
-                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
                 >Frontend</span
               >
             </div>
             <div
-              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
             >
               Vue / Nuxt
               <span
-                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
                 >Framework</span
               >
             </div>
             <div
-              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
             >
               Laravel / Livewire / Filament
               <span
-                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
                 >Backend</span
               >
             </div>
             <div
-              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange group"
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
             >
-              Photoshop / Illustrator / Figma / XD
+              Figma / Photoshop / Illustrator / XD
               <span
-                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 text-[#999] group-hover:opacity-100 group-hover:translate-x-0"
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
                 >Design</span
+              >
+            </div>
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
+            >
+              Anthropic / OpenAI
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
+                >AI</span
+              >
+            </div>
+            <div
+              class="font-sans font-bold text-[clamp(1.1rem,2vw,1.5rem)] py-5 border-b-2 border-dark/[0.08] flex justify-between items-center transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] cursor-default hover:pl-6 hover:text-orange focus-within:pl-6 focus-within:text-orange group"
+            >
+              Raspberry Pi / Arduino
+              <span
+                class="text-[0.7rem] font-semibold tracking-[0.1em] uppercase opacity-0 -translate-x-2.5 transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] text-[#999] group-hover:opacity-100 group-hover:translate-x-0 group-focus-within:opacity-100 group-focus-within:translate-x-0"
+                >IoT</span
               >
             </div>
           </div>
@@ -481,180 +839,153 @@ function getGridClasses(colSpan: number, rowSpan: number) {
       </div>
     </section>
 
-    <!-- HOBBIES MARQUEE -->
-    <div class="bg-yellow py-10 overflow-hidden">
-      <div class="flex animate-marquee-slow w-max">
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Mountain Biking <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Snowboarding <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Frisbee Golf <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-        <span
-          class="font-serif italic text-[clamp(2.5rem,5vw,4rem)] text-dark px-12 whitespace-nowrap flex items-center gap-12"
-          >Hockey <span class="font-sans not-italic text-2xl text-orange">&starf;</span></span
-        >
-      </div>
-    </div>
-
     <!-- FOOTER -->
     <footer
-      class="text-white py-[clamp(3rem,6vw,5rem)] px-[clamp(1.5rem,5vw,4rem)] text-center relative overflow-hidden"
+      class="text-white pt-[clamp(4rem,8vw,8rem)] pb-8 px-[clamp(1.5rem,5vw,4rem)] relative overflow-hidden"
       id="contact"
     >
+      <!-- DARKER MESH GRADIENT -->
       <MeshGradient
         colors={[
-          '#0a0a0a', // very dark gray
-          '#1a1a1a', // dark gray
-          '#2a2a2a', // medium dark gray
-          '#1f1f1f', // dark charcoal
-          '#0f0f0f', // almost black
-          '#252525', // dark gray
-          '#151515', // very dark
-          '#1c1c1c', // dark gray
-          '#0a0a0a'  // very dark gray for blend
+          '#0f0f0f', // deep black
+          '#1a1a1a', // very dark gray
+          '#242424', // dark gray
+          '#2d2d2d', // charcoal
+          '#1a1a1a', // very dark gray
+          '#7a7a7a', // ONE lighter steel accent
+          '#0f0f0f', // deep black
+          '#242424', // dark gray
+          '#1a1a1a', // very dark gray
+          '#2d2d2d', // charcoal
+          '#0f0f0f' // deep black
         ]}
       />
-      <div class="relative z-[2] max-w-[1100px] mx-auto">
-        <div
-          class="font-sans font-extrabold text-xs tracking-[0.2em] uppercase text-orange bg-yellow inline-block px-6 py-2 rounded-full mb-8 shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
-        >
-          Let’s Connect
+
+      <div class="relative z-[2] max-w-[1400px] mx-auto">
+        <!-- HEADER -->
+        <div class="text-center mb-[clamp(3rem,6vw,5rem)]">
+          <h2 class="font-serif text-[clamp(4rem,11vw,9.5rem)] leading-[0.9] tracking-[-0.03em] mb-6">
+            <span class="text-white/40">Let’s Build</span><br />
+            <em class="italic text-white"
+              >Something <span
+                class="relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.05em] after:right-[-0.1em] after:h-[0.15em] after:bg-white/10 after:rounded-full after:z-[-1]"
+                >Great</span
+              ></em
+            >
+          </h2>
         </div>
-        <h2 class="font-serif text-[clamp(3.5rem,10vw,8rem)] leading-[0.9] tracking-[-0.03em] mb-12 relative">
-          <span>Got a project?</span><br />
-          <em
-            class="italic text-yellow relative inline-block after:content-[''] after:absolute after:bottom-[0.04em] after:left-[-0.1em] after:right-[-0.03em] after:h-[0.15em] after:bg-white/20 after:rounded-full after:z-[-1]"
-            >Let’s talk.</em
-          >
-        </h2>
 
-        <div
-          class="relative max-w-[680px] mx-auto mb-12 contact-form-wrapper"
-        >
-          <!-- Glow effect behind form -->
-          <div class="absolute -inset-8 bg-gradient-to-br from-orange/20 via-yellow/10 to-orange/5 blur-[60px] rounded-full opacity-60"></div>
-
-          <!-- Form container with frosted glass effect -->
-          <div class="relative bg-white/95 backdrop-blur-xl rounded-[28px] p-[clamp(2.5rem,5vw,3.5rem)] shadow-[0_25px_80px_rgba(0,0,0,0.4),0_0_1px_rgba(255,255,255,0.3)_inset] border border-white/20">
-            <form name="contact" method="POST" data-netlify="true" class="text-left flex flex-col gap-6">
+        <!-- CONTACT FORM -->
+        <div class="max-w-[700px] mx-auto mb-[clamp(4rem,8vw,6rem)]">
+          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-white/10">
+            <form
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              class="flex flex-col gap-6"
+              aria-label="Contact form"
+            >
               <input type="hidden" name="form-name" value="contact" />
 
+              <!-- NAME + EMAIL ROW -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="flex flex-col gap-2.5">
-                  <label for="name" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
-                    Name
+                <!-- NAME -->
+                <div class="group">
+                  <label
+                    for="name"
+                    class="font-sans font-bold text-xs tracking-[0.15em] uppercase text-white/60 mb-3 block transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-focus-within:text-orange"
+                  >
+                    Name <span class="text-orange">*</span>
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    placeholder="Your name"
+                    placeholder="Jane Smith"
                     required
-                    class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20"
+                    aria-required="true"
+                    class="w-full font-sans text-lg font-semibold py-3 px-4 bg-white/5 border-2 border-white/20 rounded-lg text-white outline-none transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] placeholder:text-white/30 hover:border-white/40 hover:bg-white/8 focus:border-orange focus:bg-white/10"
                   />
                 </div>
-                <div class="flex flex-col gap-2.5">
-                  <label for="email" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
-                    Email
+
+                <!-- EMAIL -->
+                <div class="group">
+                  <label
+                    for="email"
+                    class="font-sans font-bold text-xs tracking-[0.15em] uppercase text-white/60 mb-3 block transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-focus-within:text-orange"
+                  >
+                    Email <span class="text-orange">*</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="you@email.com"
+                    placeholder="jane@company.com"
                     required
-                    class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20"
+                    aria-required="true"
+                    class="w-full font-sans text-lg font-semibold py-3 px-4 bg-white/5 border-2 border-white/20 rounded-lg text-white outline-none transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] placeholder:text-white/30 hover:border-white/40 hover:bg-white/8 focus:border-orange focus:bg-white/10"
                   />
                 </div>
               </div>
 
-              <div class="flex flex-col gap-2.5">
-                <label for="message" class="font-sans font-bold text-[0.75rem] tracking-[0.12em] uppercase text-dark/60">
-                  Message
+              <!-- MESSAGE -->
+              <div class="group">
+                <label
+                  for="message"
+                  class="font-sans font-bold text-xs tracking-[0.15em] uppercase text-white/60 mb-3 block transition-colors duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-focus-within:text-orange"
+                >
+                  Message <span class="text-orange">*</span>
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows="5"
+                  rows="4"
                   placeholder="Tell me about your project..."
                   required
-                  class="font-sans text-base font-medium py-4 px-5 bg-cream/80 border-2 border-dark/10 rounded-2xl text-dark outline-none transition-all duration-300 resize-y placeholder:text-dark/30 focus:border-orange focus:bg-cream focus:shadow-[0_0_0_4px_rgba(232,88,12,0.1)] hover:border-dark/20 min-h-[140px]"
+                  aria-required="true"
+                  class="w-full font-sans text-lg font-medium leading-[1.5] py-3 px-4 bg-white/5 border-2 border-white/20 rounded-lg text-white outline-none transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] resize-y placeholder:text-white/30 hover:border-white/40 hover:bg-white/8 focus:border-orange focus:bg-white/10 min-h-[120px]"
                 ></textarea>
               </div>
 
-              <button
-                type="submit"
-                class="contact-submit-btn font-sans font-extrabold text-base text-white bg-gradient-to-r from-orange to-orange/90 border-none py-4 px-12 rounded-full cursor-pointer inline-flex items-center justify-center gap-3 self-center mt-2 shadow-[0_8px_25px_rgba(232,88,12,0.35)] transition-all duration-300 hover:shadow-[0_12px_35px_rgba(232,88,12,0.45)] hover:-translate-y-1 hover:scale-[1.02] active:translate-y-0 active:scale-100"
-              >
-                Send Message
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-300 group-hover:translate-x-1">
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </button>
+              <!-- SUBMIT BUTTON -->
+              <div class="flex justify-center mt-6">
+                <button
+                  type="submit"
+                  class="font-sans font-bold text-base tracking-[0.05em] uppercase bg-orange text-white py-4 px-10 border-2 border-orange rounded-full cursor-pointer transition-all duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] hover:bg-yellow hover:border-yellow hover:text-dark focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2"
+                  aria-label="Submit contact form"
+                >
+                  Send Message
+                </button>
+              </div>
+
+              <p class="sr-only">All fields are required.</p>
             </form>
           </div>
         </div>
-      </div>
 
-      <div
-        class="relative z-[2] pt-8 border-t-2 border-dashed border-white/15 grid grid-cols-[1fr_auto_1fr] items-center gap-4 font-sans text-base text-white/50"
-      >
-        <span class="justify-self-start">&copy; 2026 Charlie Hield</span>
-        <span class="inline-flex items-center gap-1.5 justify-self-center"
-          >Built with <span class="text-yellow inline-block animate-pulse-scale">&hearts;</span> & Astro</span
-        >
-        <a
-          href="https://github.com/stursby"
-          target="_blank"
-          class="text-white/50 no-underline transition-all duration-300 hover:text-yellow hover:-translate-y-px inline-flex items-center gap-2 justify-self-end"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-            ></path>
-          </svg>
-          GitHub
-        </a>
+        <!-- FOOTER -->
+        <div class="mt-16 pt-12 pb-6 border-t border-white/10">
+          <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4 text-center md:text-left">
+            <div class="font-sans text-base text-white/50 md:text-left flex gap-1 justify-center md:justify-start">
+              <span class="text-xl">©</span> 2026 Charlie Hield
+            </div>
+            <div class="font-serif italic text-xl text-white/50 text-center">Made with 💛 &nbsp;in MPLS</div>
+            <div class="md:text-right flex justify-center md:justify-end">
+              <a
+                href="https://github.com/stursby"
+                target="_blank"
+                class="font-sans text-base text-white/50 no-underline inline-flex items-center gap-1.5 transition-colors duration-300 hover:text-orange focus-visible:text-orange focus-visible:outline-2 focus-visible:outline-orange focus-visible:outline-offset-2 focus-visible:rounded-sm"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="opacity-70">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  ></path>
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   </div>
@@ -710,5 +1041,67 @@ function getGridClasses(colSpan: number, rowSpan: number) {
       }
     `
     document.head.appendChild(style)
+
+    // Mobile scroll animations for projects
+    if (window.innerWidth <= 768) {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -80px 0px'
+      }
+
+      const projectObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('mobile-visible')
+          }
+        })
+      }, observerOptions)
+
+      // Observe all project sections
+      document.querySelectorAll('.project-section').forEach(section => {
+        section.classList.add('mobile-animated')
+        projectObserver.observe(section)
+      })
+
+      // Add mobile animation styles
+      const mobileStyle = document.createElement('style')
+      mobileStyle.textContent = `
+        @media (max-width: 768px) {
+          .mobile-animated .content-left,
+          .mobile-animated .content-right .timeline-image {
+            opacity: 0;
+          }
+
+          .mobile-animated.mobile-visible .content-left {
+            animation: mobileFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image {
+            animation: mobileFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(1) {
+            animation-delay: 0.2s;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(2) {
+            animation-delay: 0.3s;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(3) {
+            animation-delay: 0.4s;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(4) {
+            animation-delay: 0.5s;
+          }
+
+          .mobile-animated.mobile-visible .content-right .timeline-image:nth-child(5) {
+            animation-delay: 0.6s;
+          }
+        }
+      `
+      document.head.appendChild(mobileStyle)
+    }
   </script>
 </Layout>

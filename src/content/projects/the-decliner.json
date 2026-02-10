@@ -3,6 +3,7 @@
   "subtitle": "Decliner",
   "description": "A first-of-its-kind recliner prototype that uses AI to generate an excuse to decline last-minute invites. By simply pulling the handle, The Decliner creates a text message to be used as a response.",
   "url": null,
+  "client": "La-Z-Boy",
   "order": 5,
   "colorsGenerated": true,
   "layout": "A",
@@ -15,7 +16,7 @@
     "HTML",
     "Tailwind CSS",
     "OpenAI",
-    "<model-viewer>"
+    "Model Viewer"
   ],
   "content": [
     {

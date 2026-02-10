@@ -1,0 +1,68 @@
+---
+interface Props {
+  items: string[]
+  backgroundColor?: string
+  textColor?: string
+  separator?: 'dot' | 'star'
+  speed?: 'normal' | 'slow'
+  padding?: string
+}
+
+const {
+  items,
+  backgroundColor = 'bg-dark',
+  textColor = 'text-white',
+  separator = 'dot',
+  speed = 'normal',
+  padding = 'py-4'
+} = Astro.props
+
+const animationClass = speed === 'slow' ? 'animate-marquee-slow' : 'animate-marquee'
+const separatorColor = textColor === 'text-white' ? 'bg-orange' : 'bg-orange'
+const animationDuration = speed === 'slow' ? '45s' : '60s'
+---
+
+<style define:vars={{ animationDuration }}>
+  .marquee-scroll {
+    animation: marqueeScroll var(--animationDuration) linear infinite;
+  }
+
+  @keyframes marqueeScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+</style>
+
+<div class={`${backgroundColor} ${padding} overflow-hidden relative`}>
+  <div class="flex marquee-scroll w-max">
+    {items.map(item => (
+      <span
+        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-10 whitespace-nowrap flex items-center gap-10`}
+      >
+        {item}
+        {separator === 'dot' ? (
+          <span class={`w-1.5 h-1.5 ${separatorColor} rounded-full flex-shrink-0`}></span>
+        ) : (
+          <span class="font-sans not-italic text-2xl text-orange">&starf;</span>
+        )}
+      </span>
+    ))}
+    {/* Duplicate items for seamless loop */}
+    {items.map(item => (
+      <span
+        class={`font-sans font-extrabold text-[0.85rem] tracking-[0.15em] uppercase ${textColor} px-10 whitespace-nowrap flex items-center gap-10`}
+      >
+        {item}
+        {separator === 'dot' ? (
+          <span class={`w-1.5 h-1.5 ${separatorColor} rounded-full flex-shrink-0`}></span>
+        ) : (
+          <span class="font-sans not-italic text-2xl text-orange">&starf;</span>
+        )}
+      </span>
+    ))}
+  </div>
+</div>
