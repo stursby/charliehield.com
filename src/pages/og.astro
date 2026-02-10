@@ -1,4 +1,8 @@
 ---
+if (import.meta.env.MODE === 'production') {
+  return Astro.redirect('/')
+}
+
 import MeshGradient from '../components/MeshGradient.astro'
 ---
 
@@ -21,7 +25,7 @@ import MeshGradient from '../components/MeshGradient.astro'
 
       body {
         font-family: 'Gabarito', sans-serif;
-        background-color: #F5E6D3;
+        background-color: #f5e6d3;
         color: #1a1a1a;
         overflow: hidden;
         -webkit-font-smoothing: antialiased;
@@ -38,7 +42,7 @@ import MeshGradient from '../components/MeshGradient.astro'
         padding-top: 20vh;
         text-align: center;
         position: relative;
-        background-color: #F5E6D3;
+        background-color: #f5e6d3;
         overflow: hidden;
       }
 
@@ -54,7 +58,7 @@ import MeshGradient from '../components/MeshGradient.astro'
 
       h1 em {
         font-style: italic;
-        color: #E85811;
+        color: #e85811;
         position: relative;
         display: inline-block;
       }
@@ -116,11 +120,7 @@ import MeshGradient from '../components/MeshGradient.astro'
       <h1>
         Building<br /><em>Digital</em><br />Experiences
       </h1>
-      <img
-        src="/lego.png"
-        alt="Lego minifigure"
-        class="lego-image"
-      />
+      <img src="/lego.png" alt="Lego minifigure" class="lego-image" />
       <div class="website-url">charliehield.com</div>
     </section>
   </body>
