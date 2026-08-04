@@ -3,15 +3,20 @@
   "subtitle": "Partners",
   "description": "Website build for DonerColle Partners. Built for the brands that move America, DCP combines award-winning creativity, scaled solutions and a relentless focus on driving results.",
   "url": "https://donercolle.com/",
-  "order": 1,
+  "order": 2,
   "colorsGenerated": true,
-  "layout": "A",
   "imagesPath": "/images/dcp",
   "backgroundColor": "#7cf59b",
   "textColor": "#1F2937",
   "tagBackgroundColor": "#4227401A",
   "tagTextColor": "#1F2937",
-  "technologies": ["Nuxt", "TypeScript", "Tailwind CSS", "WebGL", "GSAP"],
+  "technologies": [
+    "Nuxt",
+    "TypeScript",
+    "Tailwind CSS",
+    "WebGL",
+    "GSAP"
+  ],
   "content": [
     {
       "type": "image",

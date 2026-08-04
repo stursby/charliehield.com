@@ -7,18 +7,18 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "generate-projects": "node scripts/generate-projects.js"
+    "generate-projects": "node scripts/generate-projects.js",
+    "new-project": "node scripts/new-project.js"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.12",
-    "@astrojs/tailwind": "^5.1.5",
+    "@astrojs/cloudflare": "^14.1.7",
     "@paper-design/shaders": "^0.0.71",
-    "astro": "^5.17.1",
-    "resend": "^6.9.1",
+    "astro": "^7.1.6",
+    "resend": "^6.18.1",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
-    "glob": "^13.0.1",
+    "glob": "^13.0.6",
     "image-size": "^2.0.2",
     "node-vibrant": "^4.0.4"
   }

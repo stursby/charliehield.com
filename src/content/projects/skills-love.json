@@ -1,0 +1,23 @@
+{
+  "title": "skills.love",
+  "description": "skills.love is a Chrome Extension that drops a heart onto every skill at skills.sh. Tap it once and it’s yours — searchable, one-click installable, and always a popup away. Nerver forget another skill!",
+  "url": "https://skills.stursby.com/",
+  "order": 1,
+  "imagesPath": "/images/skills-love",
+  "backgroundColor": "#dc544c",
+  "textColor": "#FFFFFF",
+  "tagBackgroundColor": "#bcbcc41A",
+  "tagTextColor": "#FFFFFF",
+  "technologies": ["React", "TypeScript", "WXT", "Chrome Extension"],
+  "content": [
+    {
+      "type": "image",
+      "url": "/images/skills-love/skills1.png",
+      "alt": "skills1",
+      "colSpan": 8,
+      "rowSpan": 1,
+      "aspectRatio": "aspect-video"
+    }
+  ],
+  "colorsGenerated": true
+}

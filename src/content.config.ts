@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content'
+import { glob } from 'astro/loaders'
 
 const projectsCollection = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
     subtitle: z.string().optional(),
@@ -9,7 +10,6 @@ const projectsCollection = defineCollection({
     url: z.string().url().nullable(),
     client: z.string().optional(),
     order: z.number(),
-    layout: z.enum(['A', 'B']),
     imagesPath: z.string().optional(), // Path to project images directory
     backgroundColor: z.string(), // Hex color (e.g., #7cf59b)
     textColor: z.string(), // Hex color (e.g., #FFFFFF)
