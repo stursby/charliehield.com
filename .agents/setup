@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+SECONDS=0
+node_major="$(tr -d '[:space:]' < .node-version)"
+echo "Preparing Node ${node_major}"
+if ! command -v node >/dev/null || [[ "$(node -p 'process.versions.node.split(".")[0]')" != "$node_major" ]]; then
+  # /usr/local/bin is on PATH in fresh login shells and supervised services.
+  # Replace the base image's Node executable with the repository's pinned major.
+  npm install --global --prefix /usr/local "node@${node_major}" --force --no-audit --no-fund
+fi
+echo "Using $(node --version), npm $(npm --version) (${SECONDS}s)"
+
+SECONDS=0
+echo "Installing dependencies from package-lock.json"
+npm ci --no-audit --no-fund
+echo "Dependencies ready (${SECONDS}s)"

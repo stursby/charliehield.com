@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Node and node_modules persist in the orb snapshot; no wake-time repairs needed.

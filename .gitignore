@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 
 .wrangler
+
+# orb portal metadata
+.amp/portals/*
